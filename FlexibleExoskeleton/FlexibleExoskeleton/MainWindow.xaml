@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlexibleExoskeleton"
         mc:Ignorable="d"
-        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="680" Width="1080"
+        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="580" Width="1080"
         Icon="logo2016.ico"
         Loaded="Window_Loaded">
     <DockPanel Background="White">
@@ -25,7 +25,34 @@
         <!--主界面开始-->
         <Grid>
             <DockPanel>
+                <!--串口通信面板开始-->
+                <Grid DockPanel.Dock="Right" Visibility="Visible">
+                    <GroupBox Name="ParaDispPanel" Header="串口通信面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
+                        <StackPanel>
+                            <!--串口选择下拉选项框-->
+                            <DockPanel>
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="textBlock" Text="端口号" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <ComboBox x:Name="DataComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" SelectedIndex="0" DropDownClosed="DataComboBox_DropDownClosed">
+                                        <ComboBoxItem>请选择端口</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                            </DockPanel>
 
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+                <!--串口通信面板结束-->
+
+                <!--状态显示面板开始-->
+                <Grid>
+
+                </Grid>
+                <!--状态显示面板结束-->
             </DockPanel>
         </Grid>
         <!--主界面结束-->
