@@ -5,9 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlexibleExoskeleton"
         mc:Ignorable="d"
-        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="350" Width="525"
-        Icon="logo2016.ico">
-    <Grid>
-        
-    </Grid>
+        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="680" Width="1080"
+        Icon="logo2016.ico"
+        Loaded="Window_Loaded">
+    <DockPanel Background="White">
+        <!--状态栏开始-->
+        <StatusBar DockPanel.Dock="Bottom" x:Name="statusBar" Background="#FF007ACC" Padding="2">
+            <!--状态栏文本框-->
+            <StatusBarItem HorizontalAlignment="Left">
+                <TextBlock Name="statusInfoTextBlock" Foreground="White">柔性助力外骨骼状态栏</TextBlock>
+            </StatusBarItem>
+            <!--显示当前时间-->
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Name="timeDateTextBlock" Foreground="White"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+        <!--状态栏结束-->
+
+        <!--主界面开始-->
+        <Grid>
+            <DockPanel>
+
+            </DockPanel>
+        </Grid>
+        <!--主界面结束-->
+    </DockPanel>
 </Window>
