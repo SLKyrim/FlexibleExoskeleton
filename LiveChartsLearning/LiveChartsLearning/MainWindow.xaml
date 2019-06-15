@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Frame Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="Frame_Navigated"></Frame>
     </Grid>
 </Window>
