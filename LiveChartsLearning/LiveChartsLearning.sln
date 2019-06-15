@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveChartsLearning", "LiveChartsLearning\LiveChartsLearning.csproj", "{FD40E1CA-FAB7-42AC-94AD-386E095D06D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveChartsLearning", "LiveChartsLearning\LiveChartsLearning.csproj", "{9B7F44A4-4669-4EF8-B570-7DAB1FF87FFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FD40E1CA-FAB7-42AC-94AD-386E095D06D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD40E1CA-FAB7-42AC-94AD-386E095D06D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD40E1CA-FAB7-42AC-94AD-386E095D06D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD40E1CA-FAB7-42AC-94AD-386E095D06D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7F44A4-4669-4EF8-B570-7DAB1FF87FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7F44A4-4669-4EF8-B570-7DAB1FF87FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7F44A4-4669-4EF8-B570-7DAB1FF87FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7F44A4-4669-4EF8-B570-7DAB1FF87FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
