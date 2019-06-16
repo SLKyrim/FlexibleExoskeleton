@@ -38,14 +38,13 @@ namespace FlexibleExoskeleton
         private string[] SPCount = null; //用来存储计算机串口名称数组
         private int comcount = 0; //用来存储计算机可用串口数目，初始化为0
         private bool flag = false;
-        private string readData_com = null; //存储读取数据所用串口
 
-        // 串口参数
+        // 串口参数(默认)
         private string portName = null; // 串口名
         private int baudRate = 115200; // 波特率
-        private string parity = "无(None)"; // 校检位
+        private Parity parity = Parity.None; // 校检位
         private int dataBits = 8; // 数据位
-        private int stopBits = 1; // 停止位
+        private StopBits stopBits = StopBits.One; // 停止位
 
         // 绘图
         private bool IsReading = false; // 动态绘图的标记：true为开始绘图，false为停止绘图
@@ -55,15 +54,15 @@ namespace FlexibleExoskeleton
         #region 界面初始化
         private void Window_Loaded(object sender, RoutedEventArgs e)//打开程序窗口时执行
         {
-            DispatcherTimer ShowTimer = new DispatcherTimer();
-            ShowTimer.Tick += new EventHandler(ShowCurTimer); //Tick是超过计时器间隔时发生事件，此处为Tick增加了一个叫ShowCurTimer的取当前时间并扫描串口的委托
-            ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0); //设置刻度之间的时间值，设定为1秒（即文本框会1秒改变一次输出文本）
-            ShowTimer.Start();
+            DispatcherTimer showCurTimer = new DispatcherTimer();
+            showCurTimer.Tick += new EventHandler(ShowCurTimer); //Tick是超过计时器间隔时发生事件，此处为Tick增加了一个叫ShowCurTimer的取当前时间并扫描串口的委托
+            showCurTimer.Interval = new TimeSpan(0, 0, 0, 1, 0); //设置刻度之间的时间值，设定为1秒（即文本框会1秒改变一次输出文本）
+            showCurTimer.Start();
 
-            //DispatcherTimer showTimer = new DispatcherTimer();
-            //showTimer.Tick += new EventHandler(ShowSenderTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
-            //showTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);  //文本变化间隔是??毫秒(并不准确)
-            //showTimer.Start();
+            DispatcherTimer showDataTimer = new DispatcherTimer();
+            showDataTimer.Tick += new EventHandler(ShowDataTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
+            showDataTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);  //文本变化间隔是??毫秒(并不准确)
+            showDataTimer.Start();
         }
 
         private void ShowCurTimer(object sender, EventArgs e)//取当前时间并扫描可用串口的委托
@@ -81,6 +80,26 @@ namespace FlexibleExoskeleton
             timeDateTextBlock.Text = timeDateString;
 
             ScanPorts();//扫描可用串口
+        }
+
+        private void Window_Closed(object sender, EventArgs e) // 关闭程序时执行
+        {
+            ports.SerialPortClose(); // 关闭串口
+        }
+        #endregion
+
+        #region 文本数据输出
+        public void ShowDataTimer(object sender, EventArgs e)//电机状态，压力，倾角，角度传感器状态的文本输出
+        {
+            //4个压力传感器的文本框输出
+            Pressure1_Textbox.Text = ports.pressures[0].ToString("F");
+            Pressure2_Textbox.Text = ports.pressures[1].ToString("F");
+            Pressure3_Textbox.Text = ports.pressures[2].ToString("F");
+            Pressure4_Textbox.Text = ports.pressures[3].ToString("F");
+
+            //2个IMU的文本框输出
+            IMU1_Textbox.Text = ports.imus[0].ToString("F");
+            IMU2_Textbox.Text = ports.imus[1].ToString("F");
         }
         #endregion
 
@@ -102,7 +121,7 @@ namespace FlexibleExoskeleton
                 DataComboBox.Items.Add(tempComboBoxItem);
                 DataComboBox.SelectedIndex = 0;
 
-                readData_com = null;
+                portName = null;
 
                 flag = false;
 
@@ -155,6 +174,8 @@ namespace FlexibleExoskeleton
             Button bt = sender as Button;
             if (bt.Content.ToString() == "开始监控")
             {
+                ports.Data_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
+
                 IsReading = !IsReading;
                 if (IsReading) Task.Factory.StartNew(Read);
 
@@ -163,10 +184,80 @@ namespace FlexibleExoskeleton
             }
             else
             {
+                ports.SerialPortClose();
+
                 IsReading = !IsReading;
 
                 bt.Content = "开始监控";
                 bt.Background = Brushes.GreenYellow;
+            }
+        }
+        #endregion
+
+        #region 下拉选项框
+        private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
+        {
+            ComboBoxItem item = DataComboBox.SelectedItem as ComboBoxItem; //下拉窗口当前选中的项赋给item
+            string tempstr = item.Content.ToString(); //将选中的项目转为字串存储在tempstr中
+
+            for (int i = 0; i < SPCount.Length; i++)
+            {
+                if (tempstr == SPCount[i])
+                {
+                    Start_Button.IsEnabled = true; // 配置好端口后使能【开始监控按钮】
+                    portName = SPCount[i];
+                    //ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
+                }
+            }
+        }
+
+        private void BaudRateComboBox_DropDownClosed(object sender, EventArgs e) // 【波特位】下拉选项框选择好后执行
+        {
+            int.TryParse(BaudRateComboBox.Text, out baudRate);
+        }
+
+        private void ParityComboBox_DropDownClosed(object sender, EventArgs e) // 【校验位】下拉选项框选择好后执行
+        {
+            string select = ParityComboBox.Text;
+
+            if (select.Contains("Odd"))
+            {
+                parity = Parity.Odd;
+            }
+            else if (select.Contains("Even"))
+            {
+                parity = Parity.Even;
+            }
+            else if (select.Contains("Space"))
+            {
+                parity = Parity.Space;
+            }
+            else if (select.Contains("Mark"))
+            {
+                parity = Parity.Mark;
+            }
+        }
+
+        private void DataBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【数据位】下拉选项框选择好后执行
+        {
+            int.TryParse(DataBitsComboBox.Text, out dataBits);
+        }
+
+        private void StopBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【停止位】下拉选项框选择好后执行
+        {
+            string select = StopBitsComboBox.Text.Trim();
+
+            if (select.Equals("1"))
+            {
+                stopBits = StopBits.One;
+            }
+            else if (select.Equals("1.5"))
+            {
+                stopBits = StopBits.OnePointFive;
+            }
+            else if (select.Equals("2"))
+            {
+                stopBits = StopBits.Two;
             }
         }
         #endregion
@@ -418,52 +509,5 @@ namespace FlexibleExoskeleton
         #endregion
 
         #endregion
-
-        #region 下拉选项框
-        private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
-        {
-            ComboBoxItem item = DataComboBox.SelectedItem as ComboBoxItem; //下拉窗口当前选中的项赋给item
-            string tempstr = item.Content.ToString(); //将选中的项目转为字串存储在tempstr中
-
-            for (int i = 0; i < SPCount.Length; i++)
-            {
-                if (tempstr == SPCount[i])
-                {
-                    readData_com = SPCount[i];
-                    ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
-
-                    Start_Button.IsEnabled = true; // 配置好端口后使能【开始监控按钮】
-                }
-            }
-        }
-
-        private void DaudRateComboBox_DropDownClosed(object sender, EventArgs e) // 【波特位】下拉选项框选择好后执行
-        {
-
-        }
-
-        private void ParityComboBox_DropDownClosed(object sender, EventArgs e) // 【校验位】下拉选项框选择好后执行
-        {
-
-        }
-
-        private void DataBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【数据位】下拉选项框选择好后执行
-        {
-
-        }
-
-        private void StopBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【停止位】下拉选项框选择好后执行
-        {
-
-        }
-        #endregion
-
-
-
-
-
-
-
-
     }
 }

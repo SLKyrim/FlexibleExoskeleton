@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="800" Width="1280"
         Icon="logo2016.ico"
-        Loaded="Window_Loaded"
+        Loaded="Window_Loaded" Closed="Window_Closed"
         xmlns:constantChanges="clr-namespace:FlexibleExoskeleton"
         d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance constantChanges:MainWindow}">
     <DockPanel Background="White">
@@ -76,7 +76,7 @@
                                             <TextBlock Opacity=".4" FontSize="13" Margin="1,2,1,1">目前消耗的总能量</TextBlock>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Foreground="#303030" FontSize="40" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
-                                                <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">卡路里</TextBlock>
+                                                <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">cal</TextBlock>
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
@@ -144,7 +144,7 @@
                                 </DockPanel>
                             </GroupBox>
                             <!--数据监控面板结束-->
-                            
+
                             <!--串口配置面板开始-->
                             <GroupBox Name="PortsPanel" DockPanel.Dock="Top" Header="串口配置面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
                                 <DockPanel>
@@ -167,7 +167,7 @@
                                             <ColumnDefinition Width="10*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="波特率" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                        <ComboBox x:Name="DaudRateComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DaudRateComboBox_DropDownClosed">
+                                        <ComboBox x:Name="BaudRateComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="BaudRateComboBox_DropDownClosed">
                                             <ComboBoxItem>1200</ComboBoxItem>
                                             <ComboBoxItem>2400</ComboBoxItem>
                                             <ComboBoxItem>4800</ComboBoxItem>
@@ -200,8 +200,8 @@
                                             <ColumnDefinition Width="10*"/>
                                             <ColumnDefinition Width="10*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="数据位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                        <ComboBox x:Name="DataBitsComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DataBitsComboBox_DropDownClosed">
+                                        <TextBlock Text="数据位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5" Grid.ColumnSpan="2"/>
+                                        <ComboBox x:Name="DataBitsComboBox" Grid.Column="2" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DataBitsComboBox_DropDownClosed">
                                             <ComboBoxItem IsSelected="True">8</ComboBoxItem>
                                             <ComboBoxItem>7</ComboBoxItem>
                                             <ComboBoxItem>6</ComboBoxItem>
@@ -228,8 +228,8 @@
                             <!--串口配置面板结束-->
 
                             <Button x:Name="Start_Button" Background="GreenYellow"  DockPanel.Dock="Bottom" Content="开始监控" IsEnabled="False" Margin="3" Height="50" Padding="3" Click="Start_Button_Click"/>
-                          
-                            
+
+
 
                             <!--空Grid 占位用-->
                             <Grid></Grid>

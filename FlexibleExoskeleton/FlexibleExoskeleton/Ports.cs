@@ -20,6 +20,10 @@ namespace FlexibleExoskeleton
 
         //声明串口实例
         private SerialPort data_SerialPort = new SerialPort(); //【读取数据】串口
+
+        //传感器数据 
+        public byte[] pressures = new byte[4]; // 4个压力传感器
+        public byte[] imus = new byte[2]; // 2个IMU
         #endregion
 
         #region 扫描串口
@@ -31,7 +35,7 @@ namespace FlexibleExoskeleton
         #endregion
 
         #region 串口初始化
-        public void Data_SerialPort_Init(string comstring)//【读取数据】串口初始化
+        public void Data_SerialPort_Init(string portName, int baudRate, Parity parity, int dataBits, StopBits stopBits)//【读取数据】串口初始化
         {
             if (data_SerialPort != null) //换端口号时执行
             {
@@ -42,14 +46,24 @@ namespace FlexibleExoskeleton
             }
 
             data_SerialPort = new SerialPort(); // 串口实例
-            data_SerialPort.PortName = comstring; // 串口名
-            data_SerialPort.BaudRate = 115200; // 比特率
-            data_SerialPort.DataBits = 8; // 数据位
-            data_SerialPort.Parity = Parity.None; // 校检位
-            data_SerialPort.StopBits = StopBits.One; // 停止位
+            data_SerialPort.PortName = portName; // 串口名
+            data_SerialPort.BaudRate = baudRate; // 比特率
+            data_SerialPort.Parity = parity; // 校检位
+            data_SerialPort.DataBits = dataBits; // 数据位     
+            data_SerialPort.StopBits = stopBits; // 停止位
             data_SerialPort.Open();
             data_SerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
         }
+
+        public bool SerialPortClose()//关闭串口
+        {
+            if (data_SerialPort != null)
+            {
+                data_SerialPort.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
+                data_SerialPort.Close();
+            }
+            return true;
+        } 
         #endregion
 
         #region 串口通信接收下位机数据
