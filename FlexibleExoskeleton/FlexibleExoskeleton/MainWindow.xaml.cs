@@ -22,6 +22,8 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
+using Microsoft.Research.DynamicDataDisplay;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
 
 namespace FlexibleExoskeleton
 {
@@ -181,6 +183,9 @@ namespace FlexibleExoskeleton
 
                 bt.Content = "停止监控";
                 bt.Background = Brushes.Red;
+
+                // 测试绘图开始
+                cp.plotStart(ports);
             }
             else
             {
@@ -190,6 +195,9 @@ namespace FlexibleExoskeleton
 
                 bt.Content = "开始监控";
                 bt.Background = Brushes.GreenYellow;
+
+                // 测试绘图停止
+                cp.plotStop();
             }
         }
         #endregion
@@ -280,6 +288,9 @@ namespace FlexibleExoskeleton
         private double _lastLecture;
         private double _trend;
 
+        //测试绘图
+        private ChartPlotter cp;
+
         public MainWindow()
         {
             InitializeComponent();      
@@ -367,6 +378,17 @@ namespace FlexibleExoskeleton
             });
 
             DataContext = this;
+            #endregion
+
+            #region 测试绘图声明
+            EnumerableDataSource<MyPoint> total_Cur;
+
+            cp = App.Current.Resources["Cp"] as ChartPlotter;
+
+            total_Cur = new EnumerableDataSource<MyPoint>(cp.Total_pointcollection_Cur);
+            total_Cur.SetXMapping(x => CurAx_total.ConvertToDouble(x.Date));
+            total_Cur.SetYMapping(y => y._point);
+            CurPlot_total.AddLineGraph(total_Cur, Colors.Red, 2, "电机总电流");
             #endregion
         }
         #endregion

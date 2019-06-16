@@ -314,6 +314,14 @@
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
                                 <!--底部动态绘图结束-->
+
+                                <d3:ChartPlotter x:Name="CurPlot_total" Grid.Row="2">
+                                    <d3:ChartPlotter.HorizontalAxis>
+                                        <d3:HorizontalIntegerAxis x:Name="CurAx_total"/>
+                                    </d3:ChartPlotter.HorizontalAxis>
+                                    <d3:Header FontFamily="Georgia" Content="绘图测试"/>
+                                </d3:ChartPlotter>
+
                             </Grid>
                         </DockPanel>
                     </GroupBox>

@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:FlexibleExoskeleton"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--Author: Xingguo Long-->
+        <local:ChartPlotter x:Key="Cp"></local:ChartPlotter>
     </Application.Resources>
 </Application>
