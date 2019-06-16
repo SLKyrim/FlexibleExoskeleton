@@ -34,13 +34,20 @@ namespace FlexibleExoskeleton
         // 声明串口类实例
         private Ports ports = new Ports();
 
-        //扫描串口
+        // 扫描串口
         private string[] SPCount = null; //用来存储计算机串口名称数组
         private int comcount = 0; //用来存储计算机可用串口数目，初始化为0
         private bool flag = false;
         private string readData_com = null; //存储读取数据所用串口
 
-        //绘图
+        // 串口参数
+        private string portName = null; // 串口名
+        private int baudRate = 115200; // 波特率
+        private string parity = "无(None)"; // 校检位
+        private int dataBits = 8; // 数据位
+        private int stopBits = 1; // 停止位
+
+        // 绘图
         private bool IsReading = false; // 动态绘图的标记：true为开始绘图，false为停止绘图
         private int NUM_POINTS = 60; // ，每条动态曲线的最大点数
         #endregion
@@ -160,25 +167,6 @@ namespace FlexibleExoskeleton
 
                 bt.Content = "开始监控";
                 bt.Background = Brushes.GreenYellow;
-            }
-        }
-        #endregion
-
-        #region 下拉选项框
-        private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
-        {
-            ComboBoxItem item = DataComboBox.SelectedItem as ComboBoxItem; //下拉窗口当前选中的项赋给item
-            string tempstr = item.Content.ToString(); //将选中的项目转为字串存储在tempstr中
-
-            for (int i = 0; i < SPCount.Length; i++)
-            {
-                if (tempstr == SPCount[i])
-                {
-                    readData_com = SPCount[i];
-                    ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
-
-                    Start_Button.IsEnabled = true; // 配置好端口后使能【开始监控按钮】
-                }
             }
         }
         #endregion
@@ -430,5 +418,52 @@ namespace FlexibleExoskeleton
         #endregion
 
         #endregion
+
+        #region 下拉选项框
+        private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
+        {
+            ComboBoxItem item = DataComboBox.SelectedItem as ComboBoxItem; //下拉窗口当前选中的项赋给item
+            string tempstr = item.Content.ToString(); //将选中的项目转为字串存储在tempstr中
+
+            for (int i = 0; i < SPCount.Length; i++)
+            {
+                if (tempstr == SPCount[i])
+                {
+                    readData_com = SPCount[i];
+                    ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
+
+                    Start_Button.IsEnabled = true; // 配置好端口后使能【开始监控按钮】
+                }
+            }
+        }
+
+        private void DaudRateComboBox_DropDownClosed(object sender, EventArgs e) // 【波特位】下拉选项框选择好后执行
+        {
+
+        }
+
+        private void ParityComboBox_DropDownClosed(object sender, EventArgs e) // 【校验位】下拉选项框选择好后执行
+        {
+
+        }
+
+        private void DataBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【数据位】下拉选项框选择好后执行
+        {
+
+        }
+
+        private void StopBitsComboBox_DropDownClosed(object sender, EventArgs e) // 【停止位】下拉选项框选择好后执行
+        {
+
+        }
+        #endregion
+
+
+
+
+
+
+
+
     }
 }

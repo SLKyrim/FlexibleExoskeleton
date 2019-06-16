@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:FlexibleExoskeleton"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="680" Width="1080"
+        Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="800" Width="1280"
         Icon="logo2016.ico"
         Loaded="Window_Loaded"
         xmlns:constantChanges="clr-namespace:FlexibleExoskeleton"
-        d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance constantChanges:MainWindow}"
-        WindowState="Maximized">
+        d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance constantChanges:MainWindow}">
     <DockPanel Background="White">
         <!--状态栏开始-->
         <StatusBar DockPanel.Dock="Bottom" x:Name="statusBar" Background="#FF007ACC" Padding="2">
@@ -37,7 +36,8 @@
                             <GroupBox Name="MonitorPanel" DockPanel.Dock="Top" Header="数据监控面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
                                 <DockPanel>
                                     <!--动态能量显示板开始-->
-                                    <Grid DockPanel.Dock="Top" Margin="1, 2, 1, 1" MaxHeight="250" Width="200">
+                                    <Grid DockPanel.Dock="Top" Margin="1, 2, 1, 1" MaxHeight="250">
+                                        <!--添加阴影-->
                                         <Grid.Effect>
                                             <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" Opacity=".2" ShadowDepth="1"/>
                                         </Grid.Effect>
@@ -81,6 +81,66 @@
                                         </StackPanel>
                                     </Grid>
                                     <!--动态能量显示板结束-->
+                                    <!--压力传感器1显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="压力1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="Pressure1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--压力传感器1显示框结束-->
+                                    <!--压力传感器2显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="压力2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="Pressure2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--压力传感器2显示框结束-->
+                                    <!--压力传感器3显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="压力3" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="Pressure3_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--压力传感器3显示框结束-->
+                                    <!--压力传感器4显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="压力4" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="Pressure4_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--压力传感器4显示框结束-->
+                                    <!--IMU1显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="IMU1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="IMU1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--IMU1显示框结束-->
+                                    <!--IMU2显示框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="IMU2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <TextBox x:Name="IMU2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                    </Grid>
+                                    <!--IMU2显示框结束-->
                                 </DockPanel>
                             </GroupBox>
                             <!--数据监控面板结束-->
@@ -88,7 +148,7 @@
                             <!--串口配置面板开始-->
                             <GroupBox Name="PortsPanel" DockPanel.Dock="Top" Header="串口配置面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
                                 <DockPanel>
-                                    <!--串口选择下拉选项框-->
+                                    <!--端口号下拉选项框开始-->
                                     <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="10*"/>
@@ -99,6 +159,70 @@
                                             <ComboBoxItem>请选择端口</ComboBoxItem>
                                         </ComboBox>
                                     </Grid>
+                                    <!--端口号下拉选项框结束-->
+                                    <!--波特率下拉选项框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="波特率" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <ComboBox x:Name="DaudRateComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DaudRateComboBox_DropDownClosed">
+                                            <ComboBoxItem>1200</ComboBoxItem>
+                                            <ComboBoxItem>2400</ComboBoxItem>
+                                            <ComboBoxItem>4800</ComboBoxItem>
+                                            <ComboBoxItem>9600</ComboBoxItem>
+                                            <ComboBoxItem>19200</ComboBoxItem>
+                                            <ComboBoxItem>38400</ComboBoxItem>
+                                            <ComboBoxItem IsSelected="True">115200</ComboBoxItem>
+                                        </ComboBox>
+                                    </Grid>
+                                    <!--波特率下拉选项框结束-->
+                                    <!--校检位下拉选项框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="校检位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <ComboBox x:Name="ParityComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="ParityComboBox_DropDownClosed">
+                                            <ComboBoxItem Tag="None" IsSelected="True">无(None)</ComboBoxItem>
+                                            <ComboBoxItem Tag="Even">偶校验(Even)</ComboBoxItem>
+                                            <ComboBoxItem Tag="Odd">奇校验(Odd)</ComboBoxItem>
+                                            <ComboBoxItem Tag="Space">保留为0(Space)</ComboBoxItem>
+                                            <ComboBoxItem Tag="Mark">保留为1(Mark)</ComboBoxItem>
+                                        </ComboBox>
+                                    </Grid>
+                                    <!--校检位下拉选项框结束-->
+                                    <!--数据位下拉选项框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="数据位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <ComboBox x:Name="DataBitsComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DataBitsComboBox_DropDownClosed">
+                                            <ComboBoxItem IsSelected="True">8</ComboBoxItem>
+                                            <ComboBoxItem>7</ComboBoxItem>
+                                            <ComboBoxItem>6</ComboBoxItem>
+                                            <ComboBoxItem>5</ComboBoxItem>
+                                        </ComboBox>
+                                    </Grid>
+                                    <!--数据位下拉选项框结束-->
+                                    <!--停止位下拉选项框开始-->
+                                    <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="停止位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                        <ComboBox x:Name="StopBitsComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="StopBitsComboBox_DropDownClosed">
+                                            <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                                            <ComboBoxItem>1.5</ComboBoxItem>
+                                            <ComboBoxItem>2</ComboBoxItem>
+                                        </ComboBox>
+                                    </Grid>
+                                    <!--停止位下拉选项框结束-->
                                 </DockPanel>
                             </GroupBox>
                             <!--串口配置面板结束-->

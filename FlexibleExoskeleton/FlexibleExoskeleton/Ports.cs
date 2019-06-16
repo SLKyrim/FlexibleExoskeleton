@@ -44,7 +44,7 @@ namespace FlexibleExoskeleton
             data_SerialPort = new SerialPort(); // 串口实例
             data_SerialPort.PortName = comstring; // 串口名
             data_SerialPort.BaudRate = 115200; // 比特率
-            //data_SerialPort.DataBits = 8; // 数据位
+            data_SerialPort.DataBits = 8; // 数据位
             data_SerialPort.Parity = Parity.None; // 校检位
             data_SerialPort.StopBits = StopBits.One; // 停止位
             data_SerialPort.Open();
