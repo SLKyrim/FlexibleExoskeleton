@@ -20,6 +20,8 @@ using System.Windows.Threading;
 using System.Xml.Serialization;
 using LiveCharts;
 using LiveCharts.Configurations;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace FlexibleExoskeleton
 {
@@ -140,6 +142,29 @@ namespace FlexibleExoskeleton
         }
         #endregion
 
+        #region 按钮
+        private void Start_Button_Click(object sender, RoutedEventArgs e)// 点击【开始监控】按钮时执行
+        {
+            Button bt = sender as Button;
+            if (bt.Content.ToString() == "开始监控")
+            {
+                IsReading = !IsReading;
+                if (IsReading) Task.Factory.StartNew(Read);
+
+                bt.Content = "停止监控";
+                bt.Background = Brushes.Red;
+            }
+            else
+            {
+                IsReading = !IsReading;
+
+                bt.Content = "开始监控";
+                bt.Background = Brushes.GreenYellow;
+            }
+        }
+        #endregion
+
+        #region 下拉选项框
         private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
         {
             ComboBoxItem item = DataComboBox.SelectedItem as ComboBoxItem; //下拉窗口当前选中的项赋给item
@@ -151,13 +176,19 @@ namespace FlexibleExoskeleton
                 {
                     readData_com = SPCount[i];
                     ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
+
+                    Start_Button.IsEnabled = true; // 配置好端口后使能【开始监控按钮】
                 }
             }
         }
+        #endregion
 
         #region 绘图
 
         #region 绘图控件声明
+        // 界面属性变更通知接口
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // 动态曲线参数
         private double _axisMax;
         private double _axisMin;
@@ -165,6 +196,10 @@ namespace FlexibleExoskeleton
         private double _trend2;
         private double _trend3;
         private double _trend4;
+
+        //动态能量显示板参数
+        private double _lastLecture;
+        private double _trend;
 
         public MainWindow()
         {
@@ -202,6 +237,58 @@ namespace FlexibleExoskeleton
             DataContext = this;
             #endregion
 
+            #region 动态能量显示板声明
+            LastHourSeries = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    AreaLimit = -10,
+                    Values = new ChartValues<ObservableValue>
+                    {
+                        new ObservableValue(3),
+                        new ObservableValue(5),
+                        new ObservableValue(6),
+                        new ObservableValue(7),
+                        new ObservableValue(3),
+                        new ObservableValue(4),
+                        new ObservableValue(2),
+                        new ObservableValue(5),
+                        new ObservableValue(8),
+                        new ObservableValue(3),
+                        new ObservableValue(5),
+                        new ObservableValue(6),
+                        new ObservableValue(7),
+                        new ObservableValue(3),
+                        new ObservableValue(4),
+                        new ObservableValue(2),
+                        new ObservableValue(5),
+                        new ObservableValue(8)
+                    }
+                }
+            };
+            _trend = 8;
+
+            Task.Factory.StartNew(() =>
+            {
+                var r = new Random();
+
+                Action action = delegate
+                {
+                    LastHourSeries[0].Values.Add(new ObservableValue(_trend));
+                    LastHourSeries[0].Values.RemoveAt(0);
+                    SetLecture();
+                };
+
+                while (true)
+                {
+                    Thread.Sleep(500);
+                    _trend += (r.NextDouble() > 0.3 ? 1 : -1) * r.Next(0, 5);
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, action);
+                }
+            });
+
+            DataContext = this;
+            #endregion
         }
         #endregion
 
@@ -222,7 +309,7 @@ namespace FlexibleExoskeleton
             set
             {
                 _axisMax = value;
-                OnPropertyChanged("AxisMax");
+                OnPropertyChanged_ContantChangesChart("AxisMax");
             }
         }
         public double AxisMin
@@ -231,7 +318,7 @@ namespace FlexibleExoskeleton
             set
             {
                 _axisMin = value;
-                OnPropertyChanged("AxisMin");
+                OnPropertyChanged_ContantChangesChart("AxisMin");
             }
         }
 
@@ -297,31 +384,51 @@ namespace FlexibleExoskeleton
             if (IsReading) Task.Factory.StartNew(Read);
         }
 
-        #region INotifyPropertyChanged implementation
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName = null)
+        protected virtual void OnPropertyChanged_ContantChangesChart(string propertyName = null)
         {
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
 
-        #endregion
+        #region 动态能量显示板
+        public SeriesCollection LastHourSeries { get; set; }
 
-        #endregion
-
-        private void PVT_Button_Click(object sender, RoutedEventArgs e)
+        public double LastLecture
         {
-            IsReading = !IsReading;
-            if (IsReading) Task.Factory.StartNew(Read);
+            get { return _lastLecture; }
+            set
+            {
+                _lastLecture = value;
+                OnPropertyChanged_MaterialCards("LastLecture");
+            }
         }
+
+        private void SetLecture()
+        {
+            var target = ((ChartValues<ObservableValue>)LastHourSeries[0].Values).Last().Value;
+            var step = (target - _lastLecture) / 4;
+
+            Task.Factory.StartNew(() =>
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    Thread.Sleep(100);
+                    LastLecture += step;
+                }
+                LastLecture = target;
+            });
+        }
+
+        //public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged_MaterialCards(string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #endregion
     }
-
-
-
-
-
 }
