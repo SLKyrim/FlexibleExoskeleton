@@ -17,14 +17,22 @@
             Inject/Stop Data
         </Button>
         <!--Here we disable tooltips and hovering to get a better performance-->
-        <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+        <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="True" DataTooltip="{x:Null}" LegendLocation="Right">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding ChartValues}" 
+                <lvc:LineSeries Values="{Binding ChartValues1}" 
+                                PointGeometry="{x:Null}" 
+                                LineSmoothness="1"
+                                StrokeThickness="6" 
+                                Stroke="#FF007ACC"
+                                Fill="Transparent"
+                                Title="LineSeries 1"/>
+                <lvc:LineSeries Values="{Binding ChartValues2}" 
                                 PointGeometry="{x:Null}" 
                                 LineSmoothness="1"
                                 StrokeThickness="6" 
                                 Stroke="#F34336"
-                                Fill="Transparent"/>
+                                Fill="Transparent"
+                                Title="LineSeries 2"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 

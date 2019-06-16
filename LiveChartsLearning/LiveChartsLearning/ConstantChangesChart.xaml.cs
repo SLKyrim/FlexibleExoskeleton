@@ -16,7 +16,8 @@ namespace LiveChartsLearning
     {
         private double _axisMax;
         private double _axisMin;
-        private double _trend;
+        private double _trend1;
+        private double _trend2;
 
         public ConstantChangesChart()
         {
@@ -41,7 +42,8 @@ namespace LiveChartsLearning
             Charting.For<MeasureModel>(mapper);
 
             //the values property will store our values array
-            ChartValues = new ChartValues<MeasureModel>();
+            ChartValues1 = new ChartValues<MeasureModel>();
+            ChartValues2 = new ChartValues<MeasureModel>();
 
             //lets set how to display the X Labels
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
@@ -61,7 +63,8 @@ namespace LiveChartsLearning
             DataContext = this;
         }
 
-        public ChartValues<MeasureModel> ChartValues { get; set; }
+        public ChartValues<MeasureModel> ChartValues1 { get; set; }
+        public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -93,28 +96,38 @@ namespace LiveChartsLearning
 
             while (IsReading)
             {
-                Thread.Sleep(150);
+                Thread.Sleep(150); // 画图频率
                 var now = DateTime.Now;
 
-                _trend += r.Next(-8, 10);
+                _trend1 += r.Next(-8, 10); // y轴取值
 
-                ChartValues.Add(new MeasureModel
+                ChartValues1.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend
+                    Value = _trend1
+                });
+
+                _trend2 += r.Next(-8, 10); // y轴取值
+
+                ChartValues2.Add(new MeasureModel
+                {
+                    DateTime = now,
+                    Value = _trend2
                 });
 
                 SetAxisLimits(now);
 
                 //lets only use the last 150 values
-                if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
+                if (ChartValues1.Count > 150) ChartValues1.RemoveAt(0);
+                if (ChartValues2.Count > 150) ChartValues2.RemoveAt(0);
             }
         }
 
         private void SetAxisLimits(DateTime now)
         {
+            // 设置正在画图的点位于图中的位置，即左边原点的8秒后，右边终点的1秒前
             AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
+            AxisMin = now.Ticks - TimeSpan.FromSeconds(15).Ticks; // and 8 seconds behind
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
