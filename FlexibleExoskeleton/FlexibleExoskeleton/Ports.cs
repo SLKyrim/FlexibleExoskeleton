@@ -82,9 +82,13 @@ namespace FlexibleExoskeleton
                    
                     if (frame_head == 43690)
                     {
-                        pressures[0] = (float)BitConverter.ToInt32(bytes, 4) / 2000000000;
+                        byte[] test = new byte[4];
+                        test[0] = bytes[7];
+                        test[1] = bytes[6];
+                        test[2] = bytes[5];
+                        test[3] = bytes[4];
 
-                        float temp = pressures[0];
+                        pressures[0] = BitConverter.ToSingle(test, 0);
 
                         //for (int f = 0; f < 8; f++)
                         //{
