@@ -157,7 +157,8 @@ namespace FlexibleExoskeleton
 
         #region 绘图
 
-        #region 动态曲线
+        #region 绘图控件声明
+        // 动态曲线参数
         private double _axisMax;
         private double _axisMin;
         private double _trend1;
@@ -167,19 +168,9 @@ namespace FlexibleExoskeleton
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();      
 
-            //To handle live data easily, in this case we built a specialized type
-            //the MeasureModel class, it only contains 2 properties
-            //DateTime and Value
-            //We need to configure LiveCharts to handle MeasureModel class
-            //The next code configures MeasureModel  globally, this means
-            //that LiveCharts learns to plot MeasureModel and will use this config every time
-            //a IChartValues instance uses this type.
-            //this code ideally should only run once
-            //you can configure series in many ways, learn more at 
-            //http://lvcharts.net/App/examples/v1/wpf/Types%20and%20Configuration
-
+            #region 动态曲线声明
             var mapper = Mappers.Xy<MeasureModel>()
                 .X(model => model.DateTime.Ticks)   //use DateTime.Ticks as X
                 .Y(model => model.Value);           //use the value property as Y
@@ -209,8 +200,12 @@ namespace FlexibleExoskeleton
             //IsReading = false;
 
             DataContext = this;
-        }
+            #endregion
 
+        }
+        #endregion
+
+        #region 动态曲线
         public ChartValues<MeasureModel> ChartValues1 { get; set; }
         public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
