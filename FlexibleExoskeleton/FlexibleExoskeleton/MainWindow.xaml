@@ -45,7 +45,7 @@
                                     </ComboBox>
                                 </Grid>
                             </DockPanel>
-
+                            <Button x:Name="PVT_Button" Content="PVT Mode" Margin="3" Padding="3" Click="PVT_Button_Click"/>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
@@ -60,30 +60,70 @@
                                     <RowDefinition Height="10*"></RowDefinition>
                                     <RowDefinition Height="10*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Button Grid.Row="0" Click="InjectStopOnClick">
-                                    Inject/Stop Data
-                                </Button>
-                                <!--Here we disable tooltips and hovering to get a better performance-->
-                                <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+                                <!--CartesianChart 1 开始-->
+                                <lvc:CartesianChart Grid.Row="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Top">
+
                                     <lvc:CartesianChart.Series>
-                                        <lvc:LineSeries Values="{Binding ChartValues}" 
-                                PointGeometry="{x:Null}" 
-                                LineSmoothness="1"
-                                StrokeThickness="6" 
-                                Stroke="#F34336"
-                                Fill="Transparent"/>
+                                        <!--LineSeries 1-->
+                                        <lvc:LineSeries Values="{Binding ChartValues1}" 
+                                                        PointGeometry="{x:Null}" 
+                                                        LineSmoothness="1"
+                                                        StrokeThickness="6" 
+                                                        Stroke="#F34336"
+                                                        Fill="Transparent"
+                                                        Title="LineSeries 1"/>
+                                        <!--LineSeries 2-->
+                                        <lvc:LineSeries Values="{Binding ChartValues2}" 
+                                                        PointGeometry="{x:Null}" 
+                                                        LineSmoothness="1"
+                                                        StrokeThickness="6" 
+                                                        Stroke="#6BBA45"
+                                                        Fill="Transparent"
+                                                        Title="LineSeries 2"/>
                                     </lvc:CartesianChart.Series>
                                     <lvc:CartesianChart.AxisX>
                                         <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
-                          MaxValue="{Binding AxisMax}" 
-                          MinValue="{Binding AxisMin}"
-                          Unit="{Binding AxisUnit}">
+                                                  MaxValue="{Binding AxisMax}" 
+                                                  MinValue="{Binding AxisMin}"
+                                                  Unit="{Binding AxisUnit}">
                                             <lvc:Axis.Separator>
                                                 <lvc:Separator Step="{Binding AxisStep}" />
                                             </lvc:Axis.Separator>
                                         </lvc:Axis>
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
+                                <!--Here we disable tooltips and hovering to get a better performance-->
+                                <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}"  LegendLocation="Top">
+                                    <lvc:CartesianChart.Series>
+                                        <!--LineSeries 3-->
+                                        <lvc:LineSeries Values="{Binding ChartValues3}" 
+                                                        PointGeometry="{x:Null}" 
+                                                        LineSmoothness="1"
+                                                        StrokeThickness="6" 
+                                                        Stroke="#F34336"
+                                                        Fill="Transparent"
+                                                        Title="LineSeries 3"/>
+                                        <!--LineSeries 4-->
+                                        <lvc:LineSeries Values="{Binding ChartValues4}" 
+                                                        PointGeometry="{x:Null}" 
+                                                        LineSmoothness="1"
+                                                        StrokeThickness="6" 
+                                                        Stroke="#6BBA45"
+                                                        Fill="Transparent"
+                                                        Title="LineSeries 4"/>
+                                    </lvc:CartesianChart.Series>
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                                                  MaxValue="{Binding AxisMax}" 
+                                                  MinValue="{Binding AxisMin}"
+                                                  Unit="{Binding AxisUnit}">
+                                            <lvc:Axis.Separator>
+                                                <lvc:Separator Step="{Binding AxisStep}" />
+                                            </lvc:Axis.Separator>
+                                        </lvc:Axis>
+                                    </lvc:CartesianChart.AxisX>
+                                </lvc:CartesianChart>
+                                
                             </Grid>
                         </DockPanel>
                     </GroupBox>

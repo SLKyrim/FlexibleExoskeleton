@@ -37,6 +37,10 @@ namespace FlexibleExoskeleton
         private int comcount = 0; //用来存储计算机可用串口数目，初始化为0
         private bool flag = false;
         private string readData_com = null; //存储读取数据所用串口
+
+        //绘图
+        private bool IsReading = false; // 动态绘图的标记：true为开始绘图，false为停止绘图
+        private int NUM_POINTS = 60; // ，每条动态曲线的最大点数
         #endregion
 
         #region 界面初始化
@@ -152,9 +156,14 @@ namespace FlexibleExoskeleton
         }
 
         #region 绘图
+
+        #region 动态曲线
         private double _axisMax;
         private double _axisMin;
-        private double _trend;
+        private double _trend1;
+        private double _trend2;
+        private double _trend3;
+        private double _trend4;
 
         public MainWindow()
         {
@@ -179,7 +188,10 @@ namespace FlexibleExoskeleton
             Charting.For<MeasureModel>(mapper);
 
             //the values property will store our values array
-            ChartValues = new ChartValues<MeasureModel>();
+            ChartValues1 = new ChartValues<MeasureModel>();
+            ChartValues2 = new ChartValues<MeasureModel>();
+            ChartValues3 = new ChartValues<MeasureModel>();
+            ChartValues4 = new ChartValues<MeasureModel>();
 
             //lets set how to display the X Labels
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
@@ -194,12 +206,17 @@ namespace FlexibleExoskeleton
 
             //The next code simulates data changes every 300 ms
 
-            IsReading = false;
+            //IsReading = false;
 
             DataContext = this;
         }
 
-        public ChartValues<MeasureModel> ChartValues { get; set; }
+        public ChartValues<MeasureModel> ChartValues1 { get; set; }
+        public ChartValues<MeasureModel> ChartValues2 { get; set; }
+        public ChartValues<MeasureModel> ChartValues3 { get; set; }
+        public ChartValues<MeasureModel> ChartValues4 { get; set; }
+
+
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -223,7 +240,7 @@ namespace FlexibleExoskeleton
             }
         }
 
-        public bool IsReading { get; set; }
+        //public bool IsReading { get; set; }
 
         private void Read()
         {
@@ -234,18 +251,42 @@ namespace FlexibleExoskeleton
                 Thread.Sleep(150);
                 var now = DateTime.Now;
 
-                _trend += r.Next(-8, 10);
+                _trend1 += r.Next(-8, 10);
+                _trend2 += r.Next(-8, 10);
+                _trend3 += r.Next(-8, 10);
+                _trend4 += r.Next(-8, 10);
 
-                ChartValues.Add(new MeasureModel
+                ChartValues1.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend
+                    Value = _trend1
+                });
+
+                ChartValues2.Add(new MeasureModel
+                {
+                    DateTime = now,
+                    Value = _trend2
+                });
+
+                ChartValues3.Add(new MeasureModel
+                {
+                    DateTime = now,
+                    Value = _trend3
+                });
+
+                ChartValues4.Add(new MeasureModel
+                {
+                    DateTime = now,
+                    Value = _trend4
                 });
 
                 SetAxisLimits(now);
 
-                //lets only use the last 150 values
-                if (ChartValues.Count > 150) ChartValues.RemoveAt(0);
+                //lets only use the last NUM_POINTS values
+                if (ChartValues1.Count > NUM_POINTS) ChartValues1.RemoveAt(0);
+                if (ChartValues2.Count > NUM_POINTS) ChartValues2.RemoveAt(0);
+                if (ChartValues3.Count > NUM_POINTS) ChartValues3.RemoveAt(0);
+                if (ChartValues4.Count > NUM_POINTS) ChartValues4.RemoveAt(0);
             }
         }
 
@@ -272,6 +313,20 @@ namespace FlexibleExoskeleton
         }
 
         #endregion
+
+        #endregion
+
+        #endregion
+
+        private void PVT_Button_Click(object sender, RoutedEventArgs e)
+        {
+            IsReading = !IsReading;
+            if (IsReading) Task.Factory.StartNew(Read);
+        }
     }
-    #endregion
+
+
+
+
+
 }
