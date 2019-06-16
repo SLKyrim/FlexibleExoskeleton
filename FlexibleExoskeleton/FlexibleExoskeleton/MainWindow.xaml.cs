@@ -33,6 +33,10 @@ namespace FlexibleExoskeleton
         private int comcount = 0; //用来存储计算机可用串口数目，初始化为0
         private bool flag = false;
         private string readData_com = null; //存储读取数据所用串口
+
+        //绘图
+        public bool isReading = false;
+        private ConstantChangesChart changesChart = new ConstantChangesChart();
         #endregion
 
         #region 界面初始化
@@ -145,6 +149,17 @@ namespace FlexibleExoskeleton
                     ports.Data_SerialPort_Init(SPCount[i]); //串口初始化
                 }
             }
+        }
+
+        private void ConstantChangesChart_Navigated(object sender, NavigationEventArgs e)
+        {
+            // 调用自定义用户控件ConstantChangesChart用以绘图
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            isReading = !isReading;
+            if (isReading) Task.Factory.StartNew(changesChart.Read);
         }
     }
 }

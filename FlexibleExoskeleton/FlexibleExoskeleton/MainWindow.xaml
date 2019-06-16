@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlexibleExoskeleton"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="中国科学院深圳先进技术研究院柔性助力外骨骼" Height="580" Width="1080"
         Icon="logo2016.ico"
@@ -42,17 +43,28 @@
                                     </ComboBox>
                                 </Grid>
                             </DockPanel>
-
+                            <Button x:Name="Test" Content="Test" Margin="3" Padding="3" Click="Test_Click"/>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
                 <!--串口通信面板结束-->
 
-                <!--状态显示面板开始-->
+                <!--绘图面板开始-->
                 <Grid>
-
+                    <GroupBox Name="ChartDispPanel" Header="绘图面板" FontSize="16" Margin="1" BorderThickness="{Binding ElementName=ParaDispPanel, Path=BorderThickness}" BorderBrush="{Binding ElementName=ParaDispPanel, Path=BorderBrush}">
+                        <DockPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Frame x:Name="ConstantChangesChart1" Grid.Row="0" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart_Navigated"></Frame>
+                                <Frame x:Name="ConstantChangesChart2" Grid.Row="1" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart_Navigated"></Frame>
+                            </Grid>
+                        </DockPanel>
+                    </GroupBox>
                 </Grid>
-                <!--状态显示面板结束-->
+                <!--绘图面板结束-->
             </DockPanel>
         </Grid>
         <!--主界面结束-->

@@ -10,7 +10,14 @@
     <Grid>
         <TabControl>
             <TabItem Header="ConstantChangesChart">
-                <Frame x:Name="ConstantChangesChart" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart_Navigated"></Frame>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Frame x:Name="ConstantChangesChart1" Grid.Row="0" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart1_Navigated"></Frame>
+                    <Frame x:Name="ConstantChangesChart2" Grid.Row="1" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart2_Navigated"></Frame>
+                </Grid>
             </TabItem>
 
             <TabItem Header="ConstantChangesChart">

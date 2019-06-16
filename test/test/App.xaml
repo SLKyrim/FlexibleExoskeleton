@@ -1,9 +1,9 @@
-﻿<Application x:Class="FlexibleExoskeleton.App"
+﻿<Application x:Class="test.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:FlexibleExoskeleton"
+             xmlns:local="clr-namespace:test"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--Designer: Xingguo Long-->
+         
     </Application.Resources>
 </Application>
