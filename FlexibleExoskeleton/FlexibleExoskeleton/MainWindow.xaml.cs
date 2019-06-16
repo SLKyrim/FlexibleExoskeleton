@@ -299,7 +299,7 @@ namespace FlexibleExoskeleton
             ChartValues4 = new ChartValues<MeasureModel>();
 
             //lets set how to display the X Labels
-            DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
+            DateTimeFormatter = value => new DateTime((long)value).ToString("HH:mm:ss"); // HH:24小时制，hh:12小时制
 
             //AxisStep forces the distance between each separator in the X axis
             AxisStep = TimeSpan.FromSeconds(1).Ticks;
@@ -412,6 +412,7 @@ namespace FlexibleExoskeleton
                 Thread.Sleep(150);
                 var now = DateTime.Now;
 
+                // 随机生成数，测试绘图效果；将ChartValues中的Value替换成想显示的值即可
                 _trend1 += r.Next(-8, 10);
                 _trend2 += r.Next(-8, 10);
                 _trend3 += r.Next(-8, 10);
@@ -492,7 +493,7 @@ namespace FlexibleExoskeleton
             {
                 for (var i = 0; i < 4; i++)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(150);
                     LastLecture += step;
                 }
                 LastLecture = target;
