@@ -127,7 +127,7 @@ namespace LiveChartsLearning
         {
             // 设置正在画图的点位于图中的位置，即左边原点的8秒后，右边终点的1秒前
             AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(15).Ticks; // and 8 seconds behind
+            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)

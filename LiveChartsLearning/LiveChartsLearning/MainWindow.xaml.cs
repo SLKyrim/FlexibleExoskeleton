@@ -27,7 +27,12 @@ namespace LiveChartsLearning
             InitializeComponent();
         }
 
-        private void Frame_Navigated(object sender, NavigationEventArgs e)
+        private void ConstantChangesChart_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+
+        private void MaterialCards_Navigated(object sender, NavigationEventArgs e)
         {
 
         }

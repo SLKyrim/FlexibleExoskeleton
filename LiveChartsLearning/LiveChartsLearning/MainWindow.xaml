@@ -8,6 +8,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Frame Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="Frame_Navigated"></Frame>
+        <TabControl>
+            <TabItem Header="ConstantChangesChart">
+                <Frame x:Name="ConstantChangesChart" Source="ConstantChangesChart.xaml"  NavigationUIVisibility="Hidden" Navigated="ConstantChangesChart_Navigated"></Frame>
+            </TabItem>
+
+            <TabItem Header="ConstantChangesChart">
+                <Frame x:Name="MaterialCards" Source="MaterialCards.xaml"  NavigationUIVisibility="Hidden" Navigated="MaterialCards_Navigated"></Frame>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
