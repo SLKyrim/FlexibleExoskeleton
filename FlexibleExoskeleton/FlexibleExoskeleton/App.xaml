@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:FlexibleExoskeleton"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--Designer: Xingguo Long-->
+         
     </Application.Resources>
 </Application>
