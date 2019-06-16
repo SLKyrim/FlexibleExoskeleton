@@ -10,7 +10,8 @@
         Icon="logo2016.ico"
         Loaded="Window_Loaded" Closed="Window_Closed"
         xmlns:constantChanges="clr-namespace:FlexibleExoskeleton"
-        d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance constantChanges:MainWindow}">
+        d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance constantChanges:MainWindow}"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0">
     <DockPanel Background="White">
         <!--状态栏开始-->
         <StatusBar DockPanel.Dock="Bottom" x:Name="statusBar" Background="#FF007ACC" Padding="2">
@@ -227,8 +228,8 @@
                             </GroupBox>
                             <!--串口配置面板结束-->
 
+                                                      
                             <Button x:Name="Start_Button" Background="GreenYellow"  DockPanel.Dock="Bottom" Content="开始监控" IsEnabled="False" Margin="3" Height="50" Padding="3" Click="Start_Button_Click"/>
-
 
 
                             <!--空Grid 占位用-->
@@ -244,6 +245,7 @@
                         <DockPanel>
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
                                     <RowDefinition Height="10*"></RowDefinition>
                                     <RowDefinition Height="10*"></RowDefinition>
                                 </Grid.RowDefinitions>

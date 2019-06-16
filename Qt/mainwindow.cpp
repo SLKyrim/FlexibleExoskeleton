@@ -309,9 +309,9 @@ void MainWindow::Read_Data(){
     {
         //        QString strl = str.mid(4,2);
         //        QString strh = str.mid(6,2);
-        QString strl = str.mid(4,2);
-        QString strh = str.mid(6,2);
-        QString str3 = strh+strl;
+        QString strl = str.mid(4,2); // 第4个往后取2个bytes
+        QString strh = str.mid(6,2); // 第6个往后取2个bytes
+        QString str3 = strh+strl; // 即数据帧的第4-8个字节
         //qDebug()<<str3.toInt(0,16);
         int str_int=str3.toInt(0,16);
         if(str_int>32767) str_int-=65536;

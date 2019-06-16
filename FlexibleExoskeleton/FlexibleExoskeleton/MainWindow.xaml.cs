@@ -174,7 +174,7 @@ namespace FlexibleExoskeleton
             Button bt = sender as Button;
             if (bt.Content.ToString() == "开始监控")
             {
-                ports.Data_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
+                ports.ReadData_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
 
                 IsReading = !IsReading;
                 if (IsReading) Task.Factory.StartNew(Read);
@@ -294,7 +294,7 @@ namespace FlexibleExoskeleton
 
             //the values property will store our values array
             ChartValues1 = new ChartValues<MeasureModel>();
-            ChartValues2 = new ChartValues<MeasureModel>();
+            //ChartValues2 = new ChartValues<MeasureModel>();
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
 
@@ -373,7 +373,7 @@ namespace FlexibleExoskeleton
 
         #region 动态曲线
         public ChartValues<MeasureModel> ChartValues1 { get; set; }
-        public ChartValues<MeasureModel> ChartValues2 { get; set; }
+        //public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
 
@@ -421,14 +421,14 @@ namespace FlexibleExoskeleton
                 ChartValues1.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend1
+                    Value = ports.pressures[0]
                 });
 
-                ChartValues2.Add(new MeasureModel
-                {
-                    DateTime = now,
-                    Value = _trend2
-                });
+                //ChartValues2.Add(new MeasureModel
+                //{
+                //    DateTime = now,
+                //    Value = _trend2
+                //});
 
                 ChartValues3.Add(new MeasureModel
                 {
@@ -446,7 +446,7 @@ namespace FlexibleExoskeleton
 
                 //lets only use the last NUM_POINTS values
                 if (ChartValues1.Count > NUM_POINTS) ChartValues1.RemoveAt(0);
-                if (ChartValues2.Count > NUM_POINTS) ChartValues2.RemoveAt(0);
+                //if (ChartValues2.Count > NUM_POINTS) ChartValues2.RemoveAt(0);
                 if (ChartValues3.Count > NUM_POINTS) ChartValues3.RemoveAt(0);
                 if (ChartValues4.Count > NUM_POINTS) ChartValues4.RemoveAt(0);
             }
