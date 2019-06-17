@@ -247,7 +247,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="10*"></RowDefinition>
                                     <RowDefinition Height="10*"></RowDefinition>
+                                    <!--
                                     <RowDefinition Height="10*"></RowDefinition>
+                                    -->
                                 </Grid.RowDefinitions>
                                 <!--顶部动态绘图开始-->
                                 <lvc:CartesianChart Grid.Row="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Top">
@@ -314,14 +316,18 @@
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
                                 <!--底部动态绘图结束-->
-
+                                
+                                <!--测试绘图开始-->
+                                <!--
                                 <d3:ChartPlotter x:Name="CurPlot_total" Grid.Row="2">
                                     <d3:ChartPlotter.HorizontalAxis>
                                         <d3:HorizontalIntegerAxis x:Name="CurAx_total"/>
                                     </d3:ChartPlotter.HorizontalAxis>
                                     <d3:Header FontFamily="Georgia" Content="绘图测试"/>
                                 </d3:ChartPlotter>
-
+                                -->
+                                <!--测试绘图结束-->
+                                
                             </Grid>
                         </DockPanel>
                     </GroupBox>

@@ -82,6 +82,7 @@ namespace FlexibleExoskeleton
                    
                     if (frame_head == 43690)
                     {
+                        // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
                         byte[] test = new byte[4];
                         test[0] = bytes[7];
                         test[1] = bytes[6];
@@ -89,13 +90,6 @@ namespace FlexibleExoskeleton
                         test[3] = bytes[4];
 
                         pressures[0] = BitConverter.ToSingle(test, 0);
-
-                        //for (int f = 0; f < 8; f++)
-                        //{
-                        //    tempPress[f] = BitConverter.ToInt16(bytes, f * 2);    //1个byte（字节）是8位，tempPress是Int16，即16位，所以一个Int16占byte数组两个位   
-                        //    tempAngle[f] = BitConverter.ToInt16(bytes, f * 2 + 16);
-                        //    dirangle[f] = (Convert.ToDouble(tempAngle[f]) * (3.3 / 4096) - 0.7444) / 1.5 * 180;
-                        //}
                     }
                 }
             }
