@@ -232,7 +232,7 @@
                                 <!--串口配置面板结束-->
 
 
-                                <Button x:Name="Start_Button" Background="GreenYellow"  DockPanel.Dock="Bottom" Content="开始监控" IsEnabled="False" Margin="3" Height="50" Padding="3" Click="Start_Button_Click"/>
+                                <Button x:Name="Start_Button" Background="GreenYellow"  DockPanel.Dock="Bottom" Content="开始监控" IsEnabled="True" Margin="3" Height="50" Padding="3" Click="Start_Button_Click"/>
 
 
                                 <!--空Grid 占位用-->
@@ -267,7 +267,7 @@
                                                         StrokeThickness="6" 
                                                         Stroke="#F34336"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 1"/>
+                                                        Title="左髋"/>
                                             <!--LineSeries 2-->
                                             <lvc:LineSeries Values="{Binding ChartValues2}" 
                                                         PointGeometry="{x:Null}" 
@@ -275,7 +275,7 @@
                                                         StrokeThickness="6" 
                                                         Stroke="#6BBA45"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 2"/>
+                                                        Title="左膝"/>
                                         </lvc:CartesianChart.Series>
                                         <lvc:CartesianChart.AxisX>
                                             <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
@@ -299,7 +299,7 @@
                                                         StrokeThickness="6" 
                                                         Stroke="#F34336"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 3"/>
+                                                        Title="右髋"/>
                                             <!--LineSeries 4-->
                                             <lvc:LineSeries Values="{Binding ChartValues4}" 
                                                         PointGeometry="{x:Null}" 
@@ -307,7 +307,7 @@
                                                         StrokeThickness="6" 
                                                         Stroke="#6BBA45"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 4"/>
+                                                        Title="右膝"/>
                                         </lvc:CartesianChart.Series>
                                         <lvc:CartesianChart.AxisX>
                                             <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
