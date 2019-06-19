@@ -38,8 +38,8 @@
                                 <DockPanel>
                                     <!--动态能量显示板开始-->
                                     <Grid DockPanel.Dock="Top" Margin="1, 2, 1, 1" MaxHeight="250">
-                                        <!--添加阴影-->
                                         <Grid.Effect>
+                                            <!--添加阴影-->
                                             <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" Opacity=".2" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <Grid.OpacityMask>
@@ -67,6 +67,7 @@
                                         <Border x:Name="Border1" Grid.Row="0" Grid.RowSpan="4" CornerRadius="5" Background="White" />
                                         <Border Grid.Row="0" Grid.RowSpan="3" Background="#CE2156" ></Border>
                                         <TextBlock Grid.Row="0" TextAlignment="Center" Padding="10, 10, 0, 5" Foreground="White" FontSize="18">能量监控</TextBlock>
+                                        <!--能量监控动态曲线-绑定LastHourSeries-->
                                         <lvc:CartesianChart Grid.Row="2" Margin="0, 0, 0, 0" Series="{Binding LastHourSeries}" Hoverable="False" DataTooltip="{x:Null}">
                                             <lvc:CartesianChart.AxisX>
                                                 <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
@@ -76,6 +77,7 @@
                                         <StackPanel Grid.Row="3" VerticalAlignment="Center" Margin="25, 0">
                                             <TextBlock Opacity=".4" FontSize="13" Margin="1,2,1,1">目前消耗的总能量</TextBlock>
                                             <StackPanel Orientation="Horizontal">
+                                                <!--能量累积-绑定LastLecture-->
                                                 <TextBlock Foreground="#303030" FontSize="40" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
                                                 <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">cal</TextBlock>
                                             </StackPanel>

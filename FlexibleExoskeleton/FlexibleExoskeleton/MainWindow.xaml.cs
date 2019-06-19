@@ -179,7 +179,11 @@ namespace FlexibleExoskeleton
                 ports.ReadData_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
 
                 IsReading = !IsReading;
-                if (IsReading) Task.Factory.StartNew(Read);
+                if (IsReading)
+                {
+                    Task.Factory.StartNew(Read);
+                    Task.Factory.StartNew(EnergeRead);
+                }
 
                 bt.Content = "停止监控";
                 bt.Background = Brushes.Red;
@@ -358,25 +362,6 @@ namespace FlexibleExoskeleton
             };
             _trend = 8;
 
-            Task.Factory.StartNew(() =>
-            {
-                var r = new Random();
-
-                Action action = delegate
-                {
-                    LastHourSeries[0].Values.Add(new ObservableValue(_trend));
-                    LastHourSeries[0].Values.RemoveAt(0);
-                    SetLecture();
-                };
-
-                while (true)
-                {
-                    Thread.Sleep(500);
-                    _trend += (r.NextDouble() > 0.3 ? 1 : -1) * r.Next(0, 5);
-                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, action);
-                }
-            });
-
             DataContext = this;
             #endregion
 
@@ -496,7 +481,7 @@ namespace FlexibleExoskeleton
         #region 动态能量显示板
         public SeriesCollection LastHourSeries { get; set; }
 
-        public double LastLecture
+        public double LastLecture // 实时显示的能量消耗值
         {
             get { return _lastLecture; }
             set
@@ -506,8 +491,33 @@ namespace FlexibleExoskeleton
             }
         }
 
+        private void EnergeRead()
+        {
+            // 能量监控绘图
+            var r = new Random();
+
+            Action action = delegate
+            {
+                double temp = _trend;
+                LastHourSeries[0].Values.Add(new ObservableValue(_trend));
+                //LastHourSeries[0].Values.Add(_trend);
+                LastHourSeries[0].Values.RemoveAt(0);
+                SetLecture();
+            };
+
+            while (IsReading)
+            {
+                double temp = _trend;
+
+                Thread.Sleep(500);
+                _trend += (r.NextDouble() > 0.3 ? 1 : -1) * r.Next(0, 5); // a=(b>0)?b:-b即b>0时,a=b,否则a=-b
+                Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, action);
+            }
+        }
+
         private void SetLecture()
         {
+            // 用Var类型预先不用知道变量的类型:必须在定义时初始化;一旦初始化完成，不能再给变量赋与初始化不同的变量;必须是局部变量
             var target = ((ChartValues<ObservableValue>)LastHourSeries[0].Values).Last().Value;
             var step = (target - _lastLecture) / 4;
 
@@ -521,8 +531,6 @@ namespace FlexibleExoskeleton
                 LastLecture = target;
             });
         }
-
-        //public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged_MaterialCards(string propertyName = null)
         {
