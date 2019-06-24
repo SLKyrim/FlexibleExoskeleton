@@ -8,13 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance local:BasicColumn}">
     <Grid>
-        <lvc:CartesianChart LegendLocation="Top">
-            <lvc:CartesianChart.Series>
-                <lvc:ColumnSeries Title="2015"
-                                  Values="{Binding ChartValues1}"/>
-                <lvc:ColumnSeries Title="2016"
-                                  Values="{Binding ChartValues2}"/>
-            </lvc:CartesianChart.Series>
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Top">
             
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Salesman" Labels="{Binding Labels}"></lvc:Axis>

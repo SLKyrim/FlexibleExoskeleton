@@ -20,11 +20,6 @@
             <TabItem Header="BasicColumn">
                 <Frame x:Name="BasicColumn" Source="BasicColumn.xaml"  NavigationUIVisibility="Hidden" Navigated="BasicColumn_Navigated"></Frame>
             </TabItem>
-
-            <TabItem Header="DynamicVisibilityExample">
-                <Frame x:Name="DynamicVisibilityExample" Source="DynamicVisibilityExample.xaml"  NavigationUIVisibility="Hidden" Navigated="DynamicVisibilityExample_Navigated"></Frame>
-            </TabItem>
-
         </TabControl>
     </Grid>
 </Window>

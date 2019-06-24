@@ -41,10 +41,5 @@ namespace LiveChartsLearning
         {
 
         }
-
-        private void DynamicVisibilityExample_Navigated(object sender, NavigationEventArgs e)
-        {
-
-        }
     }
 }
