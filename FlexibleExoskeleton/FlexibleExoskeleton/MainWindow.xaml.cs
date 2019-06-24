@@ -51,6 +51,9 @@ namespace FlexibleExoskeleton
         // 绘图
         private bool IsReading = false; // 动态绘图的标记：true为开始绘图，false为停止绘图
         private int NUM_POINTS = 60; // ，每条动态曲线的最大点数
+
+        // 人体助力指示灯
+        private bool IsLight = false;
         #endregion
 
         #region 界面初始化
@@ -174,6 +177,8 @@ namespace FlexibleExoskeleton
         private void Start_Button_Click(object sender, RoutedEventArgs e)// 点击【开始监控】按钮时执行
         {
             Button bt = sender as Button;
+            DispatcherTimer LedTimer = new DispatcherTimer();
+
             if (bt.Content.ToString() == "开始监控")
             {
                 ports.ReadData_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
@@ -181,8 +186,12 @@ namespace FlexibleExoskeleton
                 IsReading = !IsReading;
                 if (IsReading)
                 {
-                    Task.Factory.StartNew(Read);
-                    Task.Factory.StartNew(EnergeRead);
+                    Task.Factory.StartNew(Read); // 动态曲线绘图开始
+                    Task.Factory.StartNew(EnergeRead); // 能量监控开始
+
+                    LedTimer.Tick += new EventHandler(LedLightTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
+                    LedTimer.Interval = new TimeSpan(0, 0, 0, 2, 0);  //文本变化间隔是??毫秒(并不准确)
+                    LedTimer.Start();
                 }
 
                 bt.Content = "停止监控";
@@ -200,11 +209,29 @@ namespace FlexibleExoskeleton
                 bt.Content = "开始监控";
                 bt.Background = Brushes.GreenYellow;
 
+                LedTimer.Stop();
+
                 //// 测试绘图停止
                 //cp.plotStop();
             }
         }
         #endregion
+
+        private void LedLightTimer(object sender, EventArgs e)//取当前时间并扫描可用串口的委托
+        {
+            IsLight = !IsLight;
+
+            if (IsLight)
+            {
+                LeftLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightLight_Ellipse.Fill = Brushes.Gray;
+            }
+            else
+            {
+                LeftLight_Ellipse.Fill = Brushes.Gray;
+                RightLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+            }
+        }
 
         #region 下拉选项框
         private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
@@ -463,12 +490,6 @@ namespace FlexibleExoskeleton
         {
             AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
             AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
-        }
-
-        private void InjectStopOnClick(object sender, RoutedEventArgs e)
-        {
-            IsReading = !IsReading;
-            if (IsReading) Task.Factory.StartNew(Read);
         }
 
         protected virtual void OnPropertyChanged_ContantChangesChart(string propertyName = null)

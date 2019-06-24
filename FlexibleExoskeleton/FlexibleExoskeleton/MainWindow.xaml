@@ -34,214 +34,267 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <GroupBox Name="ParaDispPanel" Header="控制面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
                             <DockPanel>
-                                <!--数据监控面板开始-->
-                                <GroupBox Name="MonitorPanel" DockPanel.Dock="Top" Header="数据监控面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
-                                    <DockPanel>
-                                        <!--动态能量显示板开始-->
-                                        <Grid DockPanel.Dock="Top" Margin="1, 2, 1, 1" MaxHeight="250">
-                                            <Grid.Effect>
-                                                <!--添加阴影-->
-                                                <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" Opacity=".2" ShadowDepth="1"/>
-                                            </Grid.Effect>
-                                            <Grid.OpacityMask>
-                                                <VisualBrush Visual="{Binding ElementName=Border1}" />
-                                            </Grid.OpacityMask>
-                                            <Grid.Resources>
-                                                <Style TargetType="lvc:LineSeries">
-                                                    <Setter Property="StrokeThickness" Value="3"></Setter>
-                                                    <Setter Property="Stroke" Value="White"></Setter>
-                                                    <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
-                                                    <Setter Property="PointGeometrySize" Value="0"></Setter>
-                                                    <Setter Property="LineSmoothness" Value="0"></Setter>
-                                                </Style>
-                                                <Style TargetType="lvc:Axis">
-                                                    <Setter Property="ShowLabels" Value="False"></Setter>
-                                                    <Setter Property="IsEnabled" Value="False"></Setter>
-                                                </Style>
-                                            </Grid.Resources>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"></RowDefinition>
-                                                <RowDefinition Height="Auto"></RowDefinition>
-                                                <RowDefinition Height=".50*"></RowDefinition>
-                                                <RowDefinition Height=".5*"></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Border x:Name="Border1" Grid.Row="0" Grid.RowSpan="4" CornerRadius="5" Background="White" />
-                                            <Border Grid.Row="0" Grid.RowSpan="3" Background="#CE2156" ></Border>
-                                            <TextBlock Grid.Row="0" TextAlignment="Center" Padding="10, 10, 0, 5" Foreground="White" FontSize="18">能量监控</TextBlock>
-                                            <!--能量监控动态曲线-绑定LastHourSeries-->
-                                            <lvc:CartesianChart Grid.Row="2" Margin="0, 0, 0, 0" Series="{Binding LastHourSeries}" Hoverable="False" DataTooltip="{x:Null}">
-                                                <lvc:CartesianChart.AxisX>
-                                                    <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
-                                                    <lvc:Axis MinValue="2"></lvc:Axis>
-                                                </lvc:CartesianChart.AxisX>
-                                            </lvc:CartesianChart>
-                                            <StackPanel Grid.Row="3" VerticalAlignment="Center" Margin="25, 0">
-                                                <TextBlock Opacity=".4" FontSize="13" Margin="1,2,1,1">目前消耗的总能量</TextBlock>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <!--能量累积-绑定LastLecture-->
-                                                    <TextBlock Foreground="#303030" FontSize="40" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
-                                                    <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">cal</TextBlock>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                        <!--动态能量显示板结束-->
-                                        <!--压力传感器1显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="压力1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="Pressure1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--压力传感器1显示框结束-->
-                                        <!--压力传感器2显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="压力2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="Pressure2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--压力传感器2显示框结束-->
-                                        <!--压力传感器3显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="压力3" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="Pressure3_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--压力传感器3显示框结束-->
-                                        <!--压力传感器4显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="压力4" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="Pressure4_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--压力传感器4显示框结束-->
-                                        <!--IMU1显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="IMU1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="IMU1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--IMU1显示框结束-->
-                                        <!--IMU2显示框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="IMU2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <TextBox x:Name="IMU2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
-                                        </Grid>
-                                        <!--IMU2显示框结束-->
-                                    </DockPanel>
-                                </GroupBox>
-                                <!--数据监控面板结束-->
-
-                                <!--串口配置面板开始-->
-                                <GroupBox Name="PortsPanel" DockPanel.Dock="Top" Header="串口配置面板" FontSize="16" Margin="1" BorderThickness="1" BorderBrush="#FF7199E0">
-                                    <DockPanel>
-                                        <!--端口号下拉选项框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="textBlock" Text="端口号" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <ComboBox x:Name="DataComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" SelectedIndex="0" DropDownClosed="DataComboBox_DropDownClosed">
-                                                <ComboBoxItem>请选择端口</ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                        <!--端口号下拉选项框结束-->
-                                        <!--波特率下拉选项框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="波特率" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <ComboBox x:Name="BaudRateComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="BaudRateComboBox_DropDownClosed">
-                                                <ComboBoxItem>1200</ComboBoxItem>
-                                                <ComboBoxItem>2400</ComboBoxItem>
-                                                <ComboBoxItem>4800</ComboBoxItem>
-                                                <ComboBoxItem>9600</ComboBoxItem>
-                                                <ComboBoxItem>19200</ComboBoxItem>
-                                                <ComboBoxItem>38400</ComboBoxItem>
-                                                <ComboBoxItem IsSelected="True">115200</ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                        <!--波特率下拉选项框结束-->
-                                        <!--校检位下拉选项框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="校检位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <ComboBox x:Name="ParityComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="ParityComboBox_DropDownClosed">
-                                                <ComboBoxItem Tag="None" IsSelected="True">无(None)</ComboBoxItem>
-                                                <ComboBoxItem Tag="Even">偶校验(Even)</ComboBoxItem>
-                                                <ComboBoxItem Tag="Odd">奇校验(Odd)</ComboBoxItem>
-                                                <ComboBoxItem Tag="Space">保留为0(Space)</ComboBoxItem>
-                                                <ComboBoxItem Tag="Mark">保留为1(Mark)</ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                        <!--校检位下拉选项框结束-->
-                                        <!--数据位下拉选项框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="数据位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5" Grid.ColumnSpan="2"/>
-                                            <ComboBox x:Name="DataBitsComboBox" Grid.Column="2" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DataBitsComboBox_DropDownClosed">
-                                                <ComboBoxItem IsSelected="True">8</ComboBoxItem>
-                                                <ComboBoxItem>7</ComboBoxItem>
-                                                <ComboBoxItem>6</ComboBoxItem>
-                                                <ComboBoxItem>5</ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                        <!--数据位下拉选项框结束-->
-                                        <!--停止位下拉选项框开始-->
-                                        <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10*"/>
-                                                <ColumnDefinition Width="10*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="停止位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
-                                            <ComboBox x:Name="StopBitsComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="StopBitsComboBox_DropDownClosed">
-                                                <ComboBoxItem IsSelected="True">1</ComboBoxItem>
-                                                <ComboBoxItem>1.5</ComboBoxItem>
-                                                <ComboBoxItem>2</ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                        <!--停止位下拉选项框结束-->
-                                    </DockPanel>
-                                </GroupBox>
-                                <!--串口配置面板结束-->
-
+                                <!--端口号下拉选项框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="textBlock" Text="端口号" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <ComboBox x:Name="DataComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" SelectedIndex="0" DropDownClosed="DataComboBox_DropDownClosed">
+                                        <ComboBoxItem>请选择端口</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <!--端口号下拉选项框结束-->
+                                <!--波特率下拉选项框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="波特率" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <ComboBox x:Name="BaudRateComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="BaudRateComboBox_DropDownClosed">
+                                        <ComboBoxItem>1200</ComboBoxItem>
+                                        <ComboBoxItem>2400</ComboBoxItem>
+                                        <ComboBoxItem>4800</ComboBoxItem>
+                                        <ComboBoxItem>9600</ComboBoxItem>
+                                        <ComboBoxItem>19200</ComboBoxItem>
+                                        <ComboBoxItem>38400</ComboBoxItem>
+                                        <ComboBoxItem IsSelected="True">115200</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <!--波特率下拉选项框结束-->
+                                <!--校检位下拉选项框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="校检位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <ComboBox x:Name="ParityComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="ParityComboBox_DropDownClosed">
+                                        <ComboBoxItem Tag="None" IsSelected="True">无(None)</ComboBoxItem>
+                                        <ComboBoxItem Tag="Even">偶校验(Even)</ComboBoxItem>
+                                        <ComboBoxItem Tag="Odd">奇校验(Odd)</ComboBoxItem>
+                                        <ComboBoxItem Tag="Space">保留为0(Space)</ComboBoxItem>
+                                        <ComboBoxItem Tag="Mark">保留为1(Mark)</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <!--校检位下拉选项框结束-->
+                                <!--数据位下拉选项框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="数据位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5" Grid.ColumnSpan="2"/>
+                                    <ComboBox x:Name="DataBitsComboBox" Grid.Column="2" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="DataBitsComboBox_DropDownClosed">
+                                        <ComboBoxItem IsSelected="True">8</ComboBoxItem>
+                                        <ComboBoxItem>7</ComboBoxItem>
+                                        <ComboBoxItem>6</ComboBoxItem>
+                                        <ComboBoxItem>5</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <!--数据位下拉选项框结束-->
+                                <!--停止位下拉选项框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="停止位" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <ComboBox x:Name="StopBitsComboBox" Grid.Column="1" Width="120" Height="28" FontSize="16" Margin="5,10,5,0" DropDownClosed="StopBitsComboBox_DropDownClosed">
+                                        <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                                        <ComboBoxItem>1.5</ComboBoxItem>
+                                        <ComboBoxItem>2</ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <!--停止位下拉选项框结束-->
 
                                 <Button x:Name="Start_Button" Background="GreenYellow"  DockPanel.Dock="Bottom" Content="开始监控" IsEnabled="False" Margin="3" Height="50" Padding="3" Click="Start_Button_Click"/>
+                                
+                                <!--空Grid 占位用-->
+                                <Grid></Grid>
+                                
+                            </DockPanel>
+                        </GroupBox>
+                    </ScrollViewer>
+                </Grid>
+                <!--控制面板结束-->
 
+                <!--监控面板开始-->
+                <Grid DockPanel.Dock="Left" Visibility="Visible">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <GroupBox Name="MonitorPanel" DockPanel.Dock="Top" Header="监控面板" FontSize="16" Margin="1" BorderThickness="{Binding ElementName=ParaDispPanel, Path=BorderThickness}" BorderBrush="{Binding ElementName=ParaDispPanel, Path=BorderBrush}">
+                            <DockPanel>
+                                <!--动态能量显示板开始-->
+                                <Grid DockPanel.Dock="Top" Margin="1, 2, 1, 1" MaxHeight="250">
+                                    <Grid.Effect>
+                                        <!--添加阴影-->
+                                        <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" Opacity=".2" ShadowDepth="1"/>
+                                    </Grid.Effect>
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Border1}" />
+                                    </Grid.OpacityMask>
+                                    <Grid.Resources>
+                                        <Style TargetType="lvc:LineSeries">
+                                            <Setter Property="StrokeThickness" Value="3"></Setter>
+                                            <Setter Property="Stroke" Value="White"></Setter>
+                                            <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
+                                            <Setter Property="PointGeometrySize" Value="0"></Setter>
+                                            <Setter Property="LineSmoothness" Value="0"></Setter>
+                                        </Style>
+                                        <Style TargetType="lvc:Axis">
+                                            <Setter Property="ShowLabels" Value="False"></Setter>
+                                            <Setter Property="IsEnabled" Value="False"></Setter>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height=".50*"></RowDefinition>
+                                        <RowDefinition Height=".5*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Border x:Name="Border1" Grid.Row="0" Grid.RowSpan="4" CornerRadius="5" Background="White" />
+                                    <Border Grid.Row="0" Grid.RowSpan="3" Background="#CE2156" ></Border>
+                                    <TextBlock Grid.Row="0" TextAlignment="Center" Padding="10, 10, 0, 5" Foreground="White" FontSize="18">能量监控</TextBlock>
+                                    <!--能量监控动态曲线-绑定LastHourSeries-->
+                                    <lvc:CartesianChart Grid.Row="2" Margin="0, 0, 0, 0" Series="{Binding LastHourSeries}" Hoverable="False" DataTooltip="{x:Null}">
+                                        <lvc:CartesianChart.AxisX>
+                                            <!--a small visual improvement, lets hide the first points (x = 0, x=1) to get better animations-->
+                                            <lvc:Axis MinValue="2"></lvc:Axis>
+                                        </lvc:CartesianChart.AxisX>
+                                    </lvc:CartesianChart>
+                                    <StackPanel Grid.Row="3" VerticalAlignment="Center" Margin="25, 0">
+                                        <TextBlock Opacity=".4" FontSize="13" Margin="1,2,1,1">目前消耗的总能量</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--能量累积-绑定LastLecture-->
+                                            <TextBlock Foreground="#303030" FontSize="40" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
+                                            <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">cal</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                <!--动态能量显示板结束-->
+                                <!--压力传感器1显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="压力1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="Pressure1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--压力传感器1显示框结束-->
+                                <!--压力传感器2显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="压力2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="Pressure2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--压力传感器2显示框结束-->
+                                <!--压力传感器3显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="压力3" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="Pressure3_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--压力传感器3显示框结束-->
+                                <!--压力传感器4显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="压力4" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="Pressure4_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--压力传感器4显示框结束-->
+                                <!--IMU1显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="IMU1" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="IMU1_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--IMU1显示框结束-->
+                                <!--IMU2显示框开始-->
+                                <Grid Margin="2,0,0,0" DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="IMU2" FontSize="16" Grid.Column="0" TextWrapping="Wrap" Margin="5,13,5,5"/>
+                                    <TextBox x:Name="IMU2_Textbox" Grid.Column="1" IsReadOnly="True" Width="120" Height="28" Margin="5,10,5,0" Text="0" FontSize="16"/>
+                                </Grid>
+                                <!--IMU2显示框结束-->
 
+                                <Grid DockPanel.Dock="Bottom">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="10*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Height="300" Grid.Row="0" DockPanel.Dock="Bottom" Source=".\images\HumanBody.jpg"/>
+                                    <!--左腿指示灯-->
+                                    <Grid x:Name="LeftLight_Grid" Grid.Row="0" Width="16" Height="16" Margin="22,120,0,0">
+                                        <Ellipse x:Name="LeftLight_Ellipse" Fill="Gray"/>
+                                        <Ellipse>
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Offset="0" Color="#00000000"/>
+                                                    <GradientStop Offset="0.88" Color="#00000000"/>
+                                                    <GradientStop Offset="1" Color="#80000000"/>
+                                                </RadialGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Margin="10">
+                                            <Ellipse.Fill>
+                                                <LinearGradientBrush>
+                                                    <GradientStop Offset="0" Color="#50FFFFFF"/>
+                                                    <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                                    <GradientStop Offset="1" Color="#50FFFFFF"/>
+                                                </LinearGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                    <!--右腿指示灯-->
+                                    <Grid Grid.Row="{Binding ElementName=LeftLight_Grid, Path=Grid.Row}" Width="{Binding ElementName=LeftLight_Grid, Path=Width}" Height="{Binding ElementName=LeftLight_Grid, Path=Height}" Margin="-25,120,0,0">
+                                        <Ellipse x:Name="RightLight_Ellipse" Fill="Gray"/>
+                                        <Ellipse>
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Offset="0" Color="#00000000"/>
+                                                    <GradientStop Offset="0.88" Color="#00000000"/>
+                                                    <GradientStop Offset="1" Color="#80000000"/>
+                                                </RadialGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Margin="10">
+                                            <Ellipse.Fill>
+                                                <LinearGradientBrush>
+                                                    <GradientStop Offset="0" Color="#50FFFFFF"/>
+                                                    <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                                    <GradientStop Offset="1" Color="#50FFFFFF"/>
+                                                </LinearGradientBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </Grid>
+                                
                                 <!--空Grid 占位用-->
                                 <Grid></Grid>
                             </DockPanel>
                         </GroupBox>
                     </ScrollViewer>
                 </Grid>
-                <!--控制面板结束-->
+                <!--监控面板结束-->
+
 
                 <!--绘图面板开始-->
                 <Grid>
@@ -324,13 +377,13 @@
 
                                     <!--测试绘图开始-->
                                     <!--
-                                <d3:ChartPlotter x:Name="CurPlot_total" Grid.Row="2">
-                                    <d3:ChartPlotter.HorizontalAxis>
-                                        <d3:HorizontalIntegerAxis x:Name="CurAx_total"/>
-                                    </d3:ChartPlotter.HorizontalAxis>
-                                    <d3:Header FontFamily="Georgia" Content="绘图测试"/>
-                                </d3:ChartPlotter>
-                                -->
+                                    <d3:ChartPlotter x:Name="CurPlot_total" Grid.Row="2">
+                                        <d3:ChartPlotter.HorizontalAxis>
+                                            <d3:HorizontalIntegerAxis x:Name="CurAx_total"/>
+                                        </d3:ChartPlotter.HorizontalAxis>
+                                        <d3:Header FontFamily="Georgia" Content="绘图测试"/>
+                                    </d3:ChartPlotter>
+                                    -->
                                     <!--测试绘图结束-->
 
                                 </Grid>
