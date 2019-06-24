@@ -223,13 +223,13 @@ namespace FlexibleExoskeleton
 
             if (IsLight)
             {
-                LeftLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                RightLight_Ellipse.Fill = Brushes.Gray;
+                LeftKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
             }
             else
             {
-                LeftLight_Ellipse.Fill = Brushes.Gray;
-                RightLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
             }
         }
 
