@@ -16,6 +16,10 @@
             <TabItem Header="ConstantChangesChart">
                 <Frame x:Name="MaterialCards" Source="MaterialCards.xaml"  NavigationUIVisibility="Hidden" Navigated="MaterialCards_Navigated"></Frame>
             </TabItem>
+
+            <TabItem Header="BasicColumn">
+                <Frame x:Name="BasicColumn" Source="BasicColumn.xaml"  NavigationUIVisibility="Hidden" Navigated="BasicColumn_Navigated"></Frame>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

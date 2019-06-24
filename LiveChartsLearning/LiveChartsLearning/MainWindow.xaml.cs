@@ -36,5 +36,10 @@ namespace LiveChartsLearning
         {
 
         }
+
+        private void BasicColumn_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 }
