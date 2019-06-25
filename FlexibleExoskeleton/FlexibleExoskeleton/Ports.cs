@@ -25,7 +25,7 @@ namespace FlexibleExoskeleton
         public float[] ActualForce = new float[4]; // 4个实际助力
         public float[] IdealForce = new float[4]; // 4个预测助力
         public float[] imus = new float[2]; // 2个IMU
-        public int led = new int(); // 1个LED触发信号
+        public float led = new float(); // 1个LED触发信号
         #endregion
 
         #region 扫描串口
@@ -64,7 +64,7 @@ namespace FlexibleExoskeleton
             }
             imus[0] = 10;
             imus[1] = 10;
-            led = 1;
+            //led = 1;
         }
 
         public bool SerialPortClose()//关闭串口
@@ -83,8 +83,22 @@ namespace FlexibleExoskeleton
         {
             try
             {
+                // 一个16进制是4位，2个16进制即1个字节
+                // 0-1两字节是帧头AAAA
+                // 2-3两字节不管
+                // 4-7四字节是第1个实际助力值(0-3)
+                // 8-11四字节是第2个实际助力值(4-7)
+                // 12-15四字节是第3个实际助力值(8-11)
+                // 16-19四字节是第4个实际助力值(12-15)
+                // 20-23四字节是第1个预测助力值(16-19)
+                // 24-27四字节是第2个预测助力值(20-23)
+                // 28-31四字节是第3个预测助力值(24-27)
+                // 32-35四字节是第4个预测助力值(28-31)
+                // 36-39四字节是左腿IMU(32-35)
+                // 40-43四字节是右腿IMU(36-39)
+                // 44-47四字节是LED触发信号(40-43)
                 int bufferlen = ReadData_SerialPort.BytesToRead; //先记录下来，避免某种原因，人为的原因，操作几次之间时间长，缓存不一致
-                if (bufferlen >= 45) //一个电机有使能，方向，转速，电流4个参数，前两个各占1个字节（2个十六进制位），后两个各占2个字节，故一个电机数据占6个字节，加上一个开始位，两个停止位，故总有1+6*4+2=27字节
+                if (bufferlen >= 49) 
                 {
                     byte[] bytes = new byte[bufferlen]; //声明一个临时数组存储当前来的串口数据
                     ReadData_SerialPort.Read(bytes, 0, bufferlen); //读取串口内部缓冲区数据到bytes数组
@@ -94,14 +108,29 @@ namespace FlexibleExoskeleton
                    
                     if (frame_head == 43690)
                     {
-                        // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
-                        byte[] test = new byte[4];
-                        test[0] = bytes[7];
-                        test[1] = bytes[6];
-                        test[2] = bytes[5];
-                        test[3] = bytes[4];
+                        
+                        byte[] temp = new byte[44];
 
-                        ActualForce[0] = BitConverter.ToSingle(test, 0);
+                        for (int i = 0; i < 11; i++) // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
+                        {
+                            temp[i * 4] = bytes[i * 4 + 7];
+                            temp[i * 4 + 1] = bytes[i * 4 + 5];
+                            temp[i * 4 + 2] = bytes[i * 4 + 3];
+                            temp[i * 4 + 3] = bytes[i * 4 + 1];
+                        }
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            ActualForce[i] = BitConverter.ToSingle(temp, i * 4);
+                            IdealForce[i] = BitConverter.ToSingle(temp, i * 4 + 16);
+                        }
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            imus[i] = BitConverter.ToSingle(temp, i * 4 + 32);
+                        }
+
+                        led = BitConverter.ToSingle(temp, 40);
                     }
                 }
             }

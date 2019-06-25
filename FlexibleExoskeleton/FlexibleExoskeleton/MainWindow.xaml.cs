@@ -90,12 +90,6 @@ namespace FlexibleExoskeleton
             timeDateTextBlock.Text = timeDateString;
 
             ScanPorts();//扫描可用串口
-
-            if (ports.led == 7)
-            {
-                ports.led = 0;
-            }
-            ports.led += 1;
         }
 
         private void Window_Closed(object sender, EventArgs e) // 关闭程序时执行
@@ -203,7 +197,7 @@ namespace FlexibleExoskeleton
                 RightFhip_Text.Foreground = Brushes.Gray;
             }
 
-            else if (ports.led == 6) // 对右前髋助力
+            else if (ports.led.ToString() == "6") // 对右前髋助力
             {
                 LeftKneeLight_Ellipse.Fill = Brushes.Gray;
                 RightKneeLight_Ellipse.Fill = Brushes.Gray;
@@ -518,7 +512,7 @@ namespace FlexibleExoskeleton
             //CurPlot_total.AddLineGraph(total_Cur, Colors.Red, 2, "电机总电流");
             #endregion
 
-            #region 环状图声明
+            #region 饼状图声明
             LeftFhipPie_SeriesCollection = new SeriesCollection
             {
                 // 参数解释：标签名，值，是否在饼中显示名，显示百分比
@@ -758,7 +752,7 @@ namespace FlexibleExoskeleton
         }
         #endregion
 
-        #region 环状图
+        #region 饼状图
         public SeriesCollection LeftFhipPie_SeriesCollection { get; set; } // 左前髋环状图
         public SeriesCollection LeftBhipPie_SeriesCollection { get; set; } // 左后髋环状图
         public SeriesCollection RightFhipPie_SeriesCollection { get; set; } // 右前髋环状图

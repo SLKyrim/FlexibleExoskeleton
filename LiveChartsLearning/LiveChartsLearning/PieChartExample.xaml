@@ -18,7 +18,7 @@
                     <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
                                LabelPoint="{Binding PointLabel}"/>
                     <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
-                               />
+                               LabelPoint="{Binding PointLabel}"/>
                     <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
                                LabelPoint="{Binding PointLabel}"/>
                 </lvc:PieChart.Series>
