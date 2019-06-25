@@ -407,73 +407,128 @@
                                         <RowDefinition Height="10*"></RowDefinition>
                                         <RowDefinition Height="10*"></RowDefinition>
                                         <!--
-                                    <RowDefinition Height="10*"></RowDefinition>
-                                    -->
+                                        <RowDefinition Height="10*"></RowDefinition>
+                                        -->
                                     </Grid.RowDefinitions>
                                     <!--顶部动态绘图开始-->
-                                    <lvc:CartesianChart Grid.Row="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Top">
-
-                                        <lvc:CartesianChart.Series>
-                                            <!--LineSeries 1-->
-                                            <lvc:LineSeries Values="{Binding ChartValues1}" 
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <lvc:CartesianChart Grid.Column="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Top">
+                                            <lvc:CartesianChart.Series>
+                                                <!--LineSeries 1-->
+                                                <lvc:LineSeries Values="{Binding ChartValues1}" 
                                                         PointGeometry="{x:Null}" 
                                                         LineSmoothness="1"
                                                         StrokeThickness="6" 
                                                         Stroke="#F34336"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 1"/>
-                                            <!--LineSeries 2-->
-                                            <lvc:LineSeries Values="{Binding ChartValues2}" 
+                                                        Title="左腿IMU"/>
+                                                <!--LineSeries 2-->
+                                                <!--
+                                                <lvc:LineSeries Values="{Binding ChartValues2}" 
                                                         PointGeometry="{x:Null}" 
                                                         LineSmoothness="1"
                                                         StrokeThickness="6" 
                                                         Stroke="#6BBA45"
                                                         Fill="Transparent"
                                                         Title="LineSeries 2"/>
-                                        </lvc:CartesianChart.Series>
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                                                -->
+                                            </lvc:CartesianChart.Series>
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
                                                   MaxValue="{Binding AxisMax}" 
                                                   MinValue="{Binding AxisMin}"
                                                   Unit="{Binding AxisUnit}">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator Step="{Binding AxisStep}" />
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisX>
-                                    </lvc:CartesianChart>
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator Step="{Binding AxisStep}" />
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                        </lvc:CartesianChart>
+
+                                        <lvc:PieChart Name="LeftFhipPie" Grid.Column="1" Series="{Binding LeftFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+
+                                        <lvc:PieChart Name="LeftBhipPie" Grid.Column="2" Series="{Binding LeftBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+
+                                    </Grid>
                                     <!--顶部动态绘图结束-->
                                     <!--底部动态绘图开始-->
-                                    <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}"  LegendLocation="Top">
-                                        <lvc:CartesianChart.Series>
-                                            <!--LineSeries 3-->
-                                            <lvc:LineSeries Values="{Binding ChartValues3}" 
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <lvc:CartesianChart Grid.Column="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}"  LegendLocation="Top">
+                                            <lvc:CartesianChart.Series>
+                                                <!--LineSeries 3-->
+                                                <lvc:LineSeries Values="{Binding ChartValues3}" 
                                                         PointGeometry="{x:Null}" 
                                                         LineSmoothness="1"
                                                         StrokeThickness="6" 
                                                         Stroke="#F34336"
                                                         Fill="Transparent"
-                                                        Title="LineSeries 3"/>
-                                            <!--LineSeries 4-->
-                                            <lvc:LineSeries Values="{Binding ChartValues4}" 
+                                                        Title="右腿IMU"/>
+                                                <!--LineSeries 4-->
+                                                <!--
+                                                <lvc:LineSeries Values="{Binding ChartValues4}" 
                                                         PointGeometry="{x:Null}" 
                                                         LineSmoothness="1"
                                                         StrokeThickness="6" 
                                                         Stroke="#6BBA45"
                                                         Fill="Transparent"
                                                         Title="LineSeries 4"/>
-                                        </lvc:CartesianChart.Series>
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                                                -->
+                                            </lvc:CartesianChart.Series>
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
                                                   MaxValue="{Binding AxisMax}" 
                                                   MinValue="{Binding AxisMin}"
                                                   Unit="{Binding AxisUnit}">
-                                                <lvc:Axis.Separator>
-                                                    <lvc:Separator Step="{Binding AxisStep}" />
-                                                </lvc:Axis.Separator>
-                                            </lvc:Axis>
-                                        </lvc:CartesianChart.AxisX>
-                                    </lvc:CartesianChart>
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator Step="{Binding AxisStep}" />
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                        </lvc:CartesianChart>
+
+                                        <lvc:PieChart Name="RightFhipPie" Grid.Column="1" Series="{Binding RightFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+
+                                        <lvc:PieChart Name="RightBhipPie" Grid.Column="2" Series="{Binding RightBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+
+                                    </Grid>
                                     <!--底部动态绘图结束-->
 
                                     <!--测试绘图开始-->

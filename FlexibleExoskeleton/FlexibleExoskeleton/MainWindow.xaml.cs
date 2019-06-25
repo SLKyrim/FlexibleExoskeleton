@@ -188,6 +188,11 @@ namespace FlexibleExoskeleton
                 {
                     Task.Factory.StartNew(Read); // 动态曲线绘图开始
                     Task.Factory.StartNew(EnergeRead); // 能量监控开始
+                    // 环状图监控开始
+                    Task.Factory.StartNew(LeftFhipPieRead);
+                    Task.Factory.StartNew(LeftBhipPieRead);
+                    Task.Factory.StartNew(RightFhipPieRead);
+                    Task.Factory.StartNew(RightBhipPieRead);
 
                     LedTimer.Tick += new EventHandler(LedLightTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
                     LedTimer.Interval = new TimeSpan(0, 0, 0, 2, 0);  //文本变化间隔是??毫秒(并不准确)
@@ -338,10 +343,10 @@ namespace FlexibleExoskeleton
             ChartValues1 = new ChartValues<MeasureModel>();
             //ChartValues2 = new ChartValues<MeasureModel>();
             ChartValues3 = new ChartValues<MeasureModel>();
-            ChartValues4 = new ChartValues<MeasureModel>();
+            //ChartValues4 = new ChartValues<MeasureModel>();
 
             //lets set how to display the X Labels
-            DateTimeFormatter = value => new DateTime((long)value).ToString("HH:mm:ss"); // HH:24小时制，hh:12小时制
+            DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss"); // HH:24小时制，hh:12小时制
 
             //AxisStep forces the distance between each separator in the X axis
             AxisStep = TimeSpan.FromSeconds(1).Ticks;
@@ -402,6 +407,78 @@ namespace FlexibleExoskeleton
             //total_Cur.SetYMapping(y => y._point);
             //CurPlot_total.AddLineGraph(total_Cur, Colors.Red, 2, "电机总电流");
             #endregion
+
+            #region Doughnut图声明
+            LeftFhipPie_SeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "左前髋实际",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "左前髋预测",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
+                    DataLabels = true
+                },
+            };
+
+            LeftBhipPie_SeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "左后髋实际",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "左后髋预测",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
+                    DataLabels = true
+                },
+            };
+
+            RightFhipPie_SeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "右前髋实际",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "右前髋预测",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
+                    DataLabels = true
+                },
+            };
+
+            RightBhipPie_SeriesCollection = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "右后髋实际",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "右后髋预测",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
+                    DataLabels = true
+                },
+            };
+
+            //adding values or series will update and animate the chart automatically
+            //SeriesCollection.Add(new PieSeries());
+            //SeriesCollection[0].Values.Add(5);
+
+            DataContext = this;
+            #endregion
         }
         #endregion
 
@@ -409,7 +486,7 @@ namespace FlexibleExoskeleton
         public ChartValues<MeasureModel> ChartValues1 { get; set; }
         //public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
-        public ChartValues<MeasureModel> ChartValues4 { get; set; }
+        //public ChartValues<MeasureModel> ChartValues4 { get; set; }
 
 
         public Func<double, string> DateTimeFormatter { get; set; }
@@ -455,7 +532,8 @@ namespace FlexibleExoskeleton
                 ChartValues1.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = ports.pressures[0]
+                    //Value = ports.pressures[0]
+                    Value = _trend1
                 });
 
                 //ChartValues2.Add(new MeasureModel
@@ -470,11 +548,11 @@ namespace FlexibleExoskeleton
                     Value = _trend3
                 });
 
-                ChartValues4.Add(new MeasureModel
-                {
-                    DateTime = now,
-                    Value = _trend4
-                });
+                //ChartValues4.Add(new MeasureModel
+                //{
+                //    DateTime = now,
+                //    Value = _trend4
+                //});
 
                 SetAxisLimits(now);
 
@@ -482,7 +560,7 @@ namespace FlexibleExoskeleton
                 if (ChartValues1.Count > NUM_POINTS) ChartValues1.RemoveAt(0);
                 //if (ChartValues2.Count > NUM_POINTS) ChartValues2.RemoveAt(0);
                 if (ChartValues3.Count > NUM_POINTS) ChartValues3.RemoveAt(0);
-                if (ChartValues4.Count > NUM_POINTS) ChartValues4.RemoveAt(0);
+                //if (ChartValues4.Count > NUM_POINTS) ChartValues4.RemoveAt(0);
             }
         }
 
@@ -557,6 +635,85 @@ namespace FlexibleExoskeleton
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Doughnut图
+        public SeriesCollection LeftFhipPie_SeriesCollection { get; set; } // 左前髋环状图
+        public SeriesCollection LeftBhipPie_SeriesCollection { get; set; } // 左后髋环状图
+        public SeriesCollection RightFhipPie_SeriesCollection { get; set; } // 右前髋环状图
+        public SeriesCollection RightBhipPie_SeriesCollection { get; set; } // 右后髋环状图
+
+        private void LeftFhipPieRead()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var r = new Random();
+
+                foreach (var series in LeftFhipPie_SeriesCollection)
+                {
+                    foreach (var observable in series.Values.Cast<ObservableValue>())
+                    {
+                        observable.Value = r.Next(0, 10);
+                    }
+                }
+            }
+        }
+
+        private void LeftBhipPieRead()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var r = new Random();
+
+                foreach (var series in LeftBhipPie_SeriesCollection)
+                {
+                    foreach (var observable in series.Values.Cast<ObservableValue>())
+                    {
+                        observable.Value = r.Next(0, 5);
+                    }
+                }
+            }
+        }
+
+        private void RightFhipPieRead()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var r = new Random();
+
+                foreach (var series in RightFhipPie_SeriesCollection)
+                {
+                    foreach (var observable in series.Values.Cast<ObservableValue>())
+                    {
+                        observable.Value = r.Next(0, 5);
+                    }
+                }
+            }
+        }
+
+        private void RightBhipPieRead()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                var r = new Random();
+
+                foreach (var series in RightBhipPie_SeriesCollection)
+                {
+                    foreach (var observable in series.Values.Cast<ObservableValue>())
+                    {
+                        observable.Value = r.Next(0, 5);
+                    }
+                }
+            }
         }
         #endregion
 

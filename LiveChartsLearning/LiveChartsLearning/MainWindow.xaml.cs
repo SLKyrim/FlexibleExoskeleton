@@ -41,5 +41,10 @@ namespace LiveChartsLearning
         {
 
         }
+
+        private void DoughnutChartExample_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 }

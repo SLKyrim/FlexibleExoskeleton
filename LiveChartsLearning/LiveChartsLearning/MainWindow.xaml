@@ -20,6 +20,12 @@
             <TabItem Header="BasicColumn">
                 <Frame x:Name="BasicColumn" Source="BasicColumn.xaml"  NavigationUIVisibility="Hidden" Navigated="BasicColumn_Navigated"></Frame>
             </TabItem>
+
+            <TabItem Header="DoughnutChartExample">
+                <Frame x:Name="DoughnutChartExample" Source="DoughnutChartExample.xaml"  NavigationUIVisibility="Hidden" Navigated="DoughnutChartExample_Navigated"></Frame>
+            </TabItem>
+
+            
         </TabControl>
     </Grid>
 </Window>
