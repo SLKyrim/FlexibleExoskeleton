@@ -190,9 +190,6 @@ namespace FlexibleExoskeleton
                     Task.Factory.StartNew(EnergeRead); // 能量监控开始
                     // 环状图监控开始
                     Task.Factory.StartNew(LeftFhipPieRead);
-                    Task.Factory.StartNew(LeftBhipPieRead);
-                    Task.Factory.StartNew(RightFhipPieRead);
-                    Task.Factory.StartNew(RightBhipPieRead);
 
                     LedTimer.Tick += new EventHandler(LedLightTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
                     LedTimer.Interval = new TimeSpan(0, 0, 0, 2, 0);  //文本变化间隔是??毫秒(并不准确)
@@ -222,6 +219,7 @@ namespace FlexibleExoskeleton
         }
         #endregion
 
+        #region LED助力指示灯
         private void LedLightTimer(object sender, EventArgs e)//取当前时间并扫描可用串口的委托
         {
             IsLight = !IsLight;
@@ -237,6 +235,7 @@ namespace FlexibleExoskeleton
                 RightKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
             }
         }
+        #endregion
 
         #region 下拉选项框
         private void DataComboBox_DropDownClosed(object sender, EventArgs e) // 【端口号】下拉选项框选择好后执行
@@ -408,20 +407,20 @@ namespace FlexibleExoskeleton
             //CurPlot_total.AddLineGraph(total_Cur, Colors.Red, 2, "电机总电流");
             #endregion
 
-            #region Doughnut图声明
+            #region 环状图声明
             LeftFhipPie_SeriesCollection = new SeriesCollection
             {
                 new PieSeries
                 {
                     Title = "左前髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = true
+                    DataLabels = false
                 },
                 new PieSeries
                 {
                     Title = "左前髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = true
+                    DataLabels = false
                 },
             };
 
@@ -430,14 +429,14 @@ namespace FlexibleExoskeleton
                 new PieSeries
                 {
                     Title = "左后髋实际",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
+                    DataLabels = false
                 },
                 new PieSeries
                 {
                     Title = "左后髋预测",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
+                    DataLabels = false
                 },
             };
 
@@ -446,14 +445,14 @@ namespace FlexibleExoskeleton
                 new PieSeries
                 {
                     Title = "右前髋实际",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
+                    DataLabels = false
                 },
                 new PieSeries
                 {
                     Title = "右前髋预测",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
+                    DataLabels = false
                 },
             };
 
@@ -462,14 +461,14 @@ namespace FlexibleExoskeleton
                 new PieSeries
                 {
                     Title = "右后髋实际",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(3) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
+                    DataLabels = false
                 },
                 new PieSeries
                 {
                     Title = "右后髋预测",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(9) },
-                    DataLabels = true
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
+                    DataLabels = false
                 },
             };
 
@@ -532,7 +531,7 @@ namespace FlexibleExoskeleton
                 ChartValues1.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = ports.imus[0]
+                    Value = ports.imus[0] // 左腿IMU
                     //Value = _trend1
                 });
 
@@ -545,7 +544,7 @@ namespace FlexibleExoskeleton
                 ChartValues3.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = ports.imus[1]
+                    Value = ports.imus[1] // 右腿IMU
                     //Value = _trend3
                 });
 
@@ -639,7 +638,7 @@ namespace FlexibleExoskeleton
         }
         #endregion
 
-        #region Doughnut图
+        #region 环状图
         public SeriesCollection LeftFhipPie_SeriesCollection { get; set; } // 左前髋环状图
         public SeriesCollection LeftBhipPie_SeriesCollection { get; set; } // 左后髋环状图
         public SeriesCollection RightFhipPie_SeriesCollection { get; set; } // 右前髋环状图
@@ -651,67 +650,51 @@ namespace FlexibleExoskeleton
             {
                 Thread.Sleep(1000);
 
+                bool flag = true;
+
                 var r = new Random();
 
                 foreach (var series in LeftFhipPie_SeriesCollection)
                 {
                     foreach (var observable in series.Values.Cast<ObservableValue>())
                     {
-                        observable.Value = r.Next(0, 10);
+                        flag = !flag;
+
+                        if (flag) observable.Value = Math.Abs(ports.IdealForce[0]); // 左前髋预测                          
+                        else observable.Value = Math.Abs(ports.ActualForce[0]); // 左前髋实际                                   
                     }
                 }
-            }
-        }
-
-        private void LeftBhipPieRead()
-        {
-            while (IsReading)
-            {
-                Thread.Sleep(1000);
-
-                var r = new Random();
 
                 foreach (var series in LeftBhipPie_SeriesCollection)
                 {
                     foreach (var observable in series.Values.Cast<ObservableValue>())
                     {
-                        observable.Value = r.Next(0, 5);
+                        flag = !flag;
+
+                        if (flag) observable.Value = Math.Abs(ports.IdealForce[1]); // 左后髋预测                          
+                        else observable.Value = Math.Abs(ports.ActualForce[1]); // 左后髋实际    
                     }
                 }
-            }
-        }
-
-        private void RightFhipPieRead()
-        {
-            while (IsReading)
-            {
-                Thread.Sleep(1000);
-
-                var r = new Random();
 
                 foreach (var series in RightFhipPie_SeriesCollection)
                 {
                     foreach (var observable in series.Values.Cast<ObservableValue>())
                     {
-                        observable.Value = r.Next(0, 5);
+                        flag = !flag;
+
+                        if (flag) observable.Value = Math.Abs(ports.IdealForce[2]); // 右前髋预测                          
+                        else observable.Value = Math.Abs(ports.ActualForce[2]); // 右前髋实际    
                     }
                 }
-            }
-        }
-
-        private void RightBhipPieRead()
-        {
-            while (IsReading)
-            {
-                Thread.Sleep(1000);
-
-                var r = new Random();
 
                 foreach (var series in RightBhipPie_SeriesCollection)
                 {
                     foreach (var observable in series.Values.Cast<ObservableValue>())
                     {
-                        observable.Value = r.Next(0, 5);
+                        flag = !flag;
+
+                        if (flag) observable.Value = Math.Abs(ports.IdealForce[3]); // 右后髋预测                          
+                        else observable.Value = Math.Abs(ports.ActualForce[3]); // 右后髋实际   
                     }
                 }
             }

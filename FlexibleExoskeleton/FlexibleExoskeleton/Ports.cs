@@ -55,6 +55,15 @@ namespace FlexibleExoskeleton
             ReadData_SerialPort.StopBits = stopBits; // 停止位
             ReadData_SerialPort.Open();
             ReadData_SerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
+
+            // 使空载时可视化绘图窗口有读数
+            for (int i = 0; i < 4; i++)
+            {
+                ActualForce[i] = 10.2F;
+                IdealForce[i] = 10.4F;
+            }
+            imus[0] = 10;
+            imus[1] = 10;
         }
 
         public bool SerialPortClose()//关闭串口

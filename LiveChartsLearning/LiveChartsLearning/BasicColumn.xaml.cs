@@ -43,5 +43,12 @@ namespace LiveChartsLearning
         public string[] Labels { get; set; }
         public Func<double, string> Formatter { get; set; }
 
+        private void update_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var r = new Random();
+
+            SeriesCollection[0].Values = new ChartValues<double> { r.Next(0,100), r.Next(0, 100), r.Next(0, 100), r.Next(0, 100) };
+            SeriesCollection[1].Values = new ChartValues<double> { r.Next(0, 100), r.Next(0, 100), r.Next(0, 100), r.Next(0, 100) };
+        }
     }
 }
