@@ -25,7 +25,7 @@ namespace FlexibleExoskeleton
         public float[] ActualForce = new float[4]; // 4个实际助力
         public float[] IdealForce = new float[4]; // 4个预测助力
         public float[] imus = new float[2]; // 2个IMU
-        public float LEDflag = new float(); // 1个LED触发信号
+        public int led = new int(); // 1个LED触发信号
         #endregion
 
         #region 扫描串口
@@ -59,11 +59,12 @@ namespace FlexibleExoskeleton
             // 使空载时可视化绘图窗口有读数
             for (int i = 0; i < 4; i++)
             {
-                ActualForce[i] = 10;
-                IdealForce[i] = 10;
+                ActualForce[i] = 10.5F;
+                IdealForce[i] = 9.5F;
             }
             imus[0] = 10;
             imus[1] = 10;
+            led = 1;
         }
 
         public bool SerialPortClose()//关闭串口

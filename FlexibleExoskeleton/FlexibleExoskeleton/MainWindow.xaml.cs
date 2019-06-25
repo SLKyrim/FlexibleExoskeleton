@@ -68,6 +68,11 @@ namespace FlexibleExoskeleton
             showDataTimer.Tick += new EventHandler(ShowDataTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
             showDataTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);  //文本变化间隔是??毫秒(并不准确)
             showDataTimer.Start();
+
+            //DispatcherTimer LedTimer = new DispatcherTimer();
+            //LedTimer.Tick += new EventHandler(LedTimer);
+            //LedTimer.Interval = new TimeSpan(0, 0, 0, 0, 100); 
+            //LedTimer.Start();
         }
 
         private void ShowCurTimer(object sender, EventArgs e)//取当前时间并扫描可用串口的委托
@@ -85,6 +90,12 @@ namespace FlexibleExoskeleton
             timeDateTextBlock.Text = timeDateString;
 
             ScanPorts();//扫描可用串口
+
+            if (ports.led == 7)
+            {
+                ports.led = 0;
+            }
+            ports.led += 1;
         }
 
         private void Window_Closed(object sender, EventArgs e) // 关闭程序时执行
@@ -93,7 +104,7 @@ namespace FlexibleExoskeleton
         }
         #endregion
 
-        #region 文本数据输出
+        #region LED（及文本框数据显示）
         public void ShowDataTimer(object sender, EventArgs e)//电机状态，压力，倾角，角度传感器状态的文本输出
         {
             //4个压力传感器的文本框输出
@@ -103,8 +114,128 @@ namespace FlexibleExoskeleton
             //Pressure4_Textbox.Text = ports.pressures[3].ToString("F");
 
             //2个IMU的文本框输出
-            IMU1_Textbox.Text = ports.imus[0].ToString("F");
-            IMU2_Textbox.Text = ports.imus[1].ToString("F");
+            //IMU1_Textbox.Text = ports.imus[0].ToString("F");
+            //IMU2_Textbox.Text = ports.imus[1].ToString("F");
+
+            // LED显示
+            if (ports.led == 1) // 对左膝助力
+            {
+                LeftKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Red;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            else if (ports.led == 2) // 对右膝助力
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Red;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            else if (ports.led == 3) // 对左后髋助力
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Red;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            else if (ports.led == 4) // 对左前髋助力
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Red;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            else if (ports.led == 5) // 对右后髋助力
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Red;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            else if (ports.led == 6) // 对右前髋助力
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Red;
+            }
+
+            else // 灯全灭
+            {
+                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
+                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightFhipLight_Ellipse.Fill = Brushes.Gray;
+
+                LeftKnee_Text.Foreground = Brushes.Gray;
+                RightKnee_Text.Foreground = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+                LeftFhip_Text.Foreground = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
+                RightFhip_Text.Foreground = Brushes.Gray;
+            }
         }
         #endregion
 
@@ -184,16 +315,14 @@ namespace FlexibleExoskeleton
                 ports.ReadData_SerialPort_Init(portName, baudRate, parity, dataBits, stopBits); // 串口初始化
 
                 IsReading = !IsReading;
+                IsLight = !IsLight;
+
                 if (IsReading)
                 {
                     Task.Factory.StartNew(Read); // 动态曲线绘图开始
                     Task.Factory.StartNew(EnergeRead); // 能量监控开始
                     // 环状图监控开始
-                    Task.Factory.StartNew(LeftFhipPieRead);
-
-                    LedTimer.Tick += new EventHandler(LedLightTimer); //增加了一个叫ShowSenderTimer的在电机和传感器的只读文本框中输出信息的委托
-                    LedTimer.Interval = new TimeSpan(0, 0, 0, 2, 0);  //文本变化间隔是??毫秒(并不准确)
-                    LedTimer.Start();
+                    Task.Factory.StartNew(LeftFhipPieRead);                   
                 }
 
                 bt.Content = "停止监控";
@@ -204,35 +333,17 @@ namespace FlexibleExoskeleton
             }
             else
             {
+                ports.led = 0;
                 ports.SerialPortClose();
 
                 IsReading = !IsReading;
+                IsLight = !IsLight;
 
                 bt.Content = "开始监控";
                 bt.Background = Brushes.GreenYellow;
-
-                LedTimer.Stop();
-
+               
                 //// 测试绘图停止
                 //cp.plotStop();
-            }
-        }
-        #endregion
-
-        #region LED助力指示灯
-        private void LedLightTimer(object sender, EventArgs e)//取当前时间并扫描可用串口的委托
-        {
-            IsLight = !IsLight;
-
-            if (IsLight)
-            {
-                LeftKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-            }
-            else
-            {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
             }
         }
         #endregion
@@ -410,9 +521,10 @@ namespace FlexibleExoskeleton
             #region 环状图声明
             LeftFhipPie_SeriesCollection = new SeriesCollection
             {
+                // 参数解释：标签名，值，是否在饼中显示名，显示百分比
                 new PieSeries
                 {
-                    Title = "左前髋实际",
+                    Title = "左前髋实际", 
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
                     DataLabels = true,
                     LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
@@ -670,11 +782,11 @@ namespace FlexibleExoskeleton
                     {
                         flag = !flag;
 
-                        if (flag) observable.Value = Math.Abs(_trend1); // 左前髋预测                          
-                        else observable.Value = Math.Abs(_trend2); // 左前髋实际     
+                        //if (flag) observable.Value = Math.Abs(_trend1); // 左前髋预测                          
+                        //else observable.Value = Math.Abs(_trend2); // 左前髋实际     
 
-                        //if (flag) observable.Value = Math.Abs(ports.IdealForce[0]); // 左前髋预测                          
-                        //else observable.Value = Math.Abs(ports.ActualForce[0]); // 左前髋实际                                   
+                        if (flag) observable.Value = Math.Abs(ports.IdealForce[0]); // 左前髋预测                          
+                        else observable.Value = Math.Abs(ports.ActualForce[0]); // 左前髋实际                                   
                     }
                 }
 
