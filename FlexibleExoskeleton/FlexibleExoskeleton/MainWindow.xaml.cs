@@ -409,21 +409,23 @@ namespace FlexibleExoskeleton
             #endregion
 
             #region Doughnut图声明
-            LeftFhipPie_SeriesCollection = new SeriesCollection
-            {
-                new PieSeries
-                {
-                    Title = "左前髋实际",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = true
-                },
-                new PieSeries
-                {
-                    Title = "左前髋预测",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = true
-                },
-            };
+            //LeftFhipPie_SeriesCollection = new SeriesCollection
+            //{
+            //    new PieSeries
+            //    {
+            //        Title = "左前髋实际",
+            //        Values = new ChartValues<float> { 0 },
+            //        DataLabels = true
+            //    },
+            //    new PieSeries
+            //    {
+            //        Title = "左前髋预测",
+            //        Values = new ChartValues<float> { 0 },
+            //        DataLabels = true
+            //    },
+            //};
+            ChartValues_LeftFhipPie_Actual = new ChartValues<double> { };
+            ChartValues_LeftFhipPie_Ideal = new ChartValues<double> { };
 
             LeftBhipPie_SeriesCollection = new SeriesCollection
             {
@@ -645,21 +647,20 @@ namespace FlexibleExoskeleton
         public SeriesCollection RightFhipPie_SeriesCollection { get; set; } // 右前髋环状图
         public SeriesCollection RightBhipPie_SeriesCollection { get; set; } // 右后髋环状图
 
+        public ChartValues<double> ChartValues_LeftFhipPie_Actual { get; set; }
+        public ChartValues<double> ChartValues_LeftFhipPie_Ideal { get; set; }
+
         private void LeftFhipPieRead()
         {
             while (IsReading)
             {
                 Thread.Sleep(1000);
 
-                var r = new Random();
+                double temp1 = _trend1;
+                double temp2 = _trend2;
 
-                foreach (var series in LeftFhipPie_SeriesCollection)
-                {
-                    foreach (var observable in series.Values.Cast<ObservableValue>())
-                    {
-                        observable.Value = r.Next(0, 10);
-                    }
-                }
+                ChartValues_LeftFhipPie_Actual = new ChartValues<double> { _trend1 };
+                ChartValues_LeftFhipPie_Ideal = new ChartValues<double> { _trend2 };
             }
         }
 

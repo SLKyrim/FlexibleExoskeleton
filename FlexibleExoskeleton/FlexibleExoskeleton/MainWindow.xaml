@@ -450,15 +450,25 @@
                                             </lvc:CartesianChart.AxisX>
                                         </lvc:CartesianChart>
 
-                                        <lvc:PieChart Name="LeftFhipPie" Grid.Column="1" Series="{Binding LeftFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                        <!--左前髋环状图-->
+                                        <lvc:PieChart Name="LeftFhipPie" Grid.Column="1" LegendLocation="Top" InnerRadius="70" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                                             </lvc:PieChart.ChartLegend>
                                             <lvc:PieChart.DataTooltip>
                                                 <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
                                             </lvc:PieChart.DataTooltip>
+                                            <lvc:PieChart.Series>
+                                                <lvc:PieSeries Title="左前髋实际"
+                                                               Values="{Binding ChartValues_LeftFhipPie_Actual}"
+                                                               DataLabels="True"/>
+                                                <lvc:PieSeries Title="左前髋预测"
+                                                               Values="{Binding ChartValues_LeftFhipPie_Ideal}"/>
+                                            </lvc:PieChart.Series>
+                                            
                                         </lvc:PieChart>
 
+                                        <!--左后髋环状图-->
                                         <lvc:PieChart Name="LeftBhipPie" Grid.Column="2" Series="{Binding LeftBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
@@ -510,6 +520,7 @@
                                             </lvc:CartesianChart.AxisX>
                                         </lvc:CartesianChart>
 
+                                        <!--右前髋环状图-->
                                         <lvc:PieChart Name="RightFhipPie" Grid.Column="1" Series="{Binding RightFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
@@ -519,6 +530,7 @@
                                             </lvc:PieChart.DataTooltip>
                                         </lvc:PieChart>
 
+                                        <!--右后髋环状图-->
                                         <lvc:PieChart Name="RightBhipPie" Grid.Column="2" Series="{Binding RightBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
