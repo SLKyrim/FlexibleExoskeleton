@@ -21,9 +21,11 @@ namespace FlexibleExoskeleton
         //声明串口实例
         private SerialPort ReadData_SerialPort = new SerialPort(); //【读取数据】串口
 
-        //传感器数据 
-        public float[] pressures = new float[4]; // 4个压力传感器
-        public Single[] imus = new Single[2]; // 2个IMU
+        //下位机数据 
+        public float[] ActualForce = new float[4]; // 4个实际助力
+        public float[] IdealForce = new float[4]; // 4个预测助力
+        public float[] imus = new float[2]; // 2个IMU
+        public float LEDflag = new float(); // 1个LED触发信号
         #endregion
 
         #region 扫描串口
@@ -89,7 +91,7 @@ namespace FlexibleExoskeleton
                         test[2] = bytes[5];
                         test[3] = bytes[4];
 
-                        pressures[0] = BitConverter.ToSingle(test, 0);
+                        ActualForce[0] = BitConverter.ToSingle(test, 0);
                     }
                 }
             }

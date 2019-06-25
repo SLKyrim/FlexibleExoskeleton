@@ -70,7 +70,7 @@ namespace FlexibleExoskeleton
 
             try
             {
-                cp.Total_pointcollection_Cur.Add(new MyPoint(ports.pressures[0], count));
+                cp.Total_pointcollection_Cur.Add(new MyPoint(ports.imus[0], count));
             }
             catch (Exception)
             {
