@@ -168,7 +168,7 @@
                                         <TextBlock Opacity=".4" FontSize="13" Margin="1,2,1,1">目前消耗的总能量</TextBlock>
                                         <StackPanel Orientation="Horizontal">
                                             <!--能量累积-绑定LastLecture-->
-                                            <TextBlock Foreground="#303030" FontSize="40" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
+                                            <TextBlock Foreground="#303030" FontSize="25" Text="{Binding LastLecture, StringFormat={}{0:N1}}" />
                                             <TextBlock Foreground="#303030" FontSize="18" VerticalAlignment="Bottom" Margin="8, 6">cal</TextBlock>
                                         </StackPanel>
                                     </StackPanel>

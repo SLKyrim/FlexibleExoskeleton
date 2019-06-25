@@ -646,7 +646,7 @@ namespace FlexibleExoskeleton
 
         private void LeftFhipPieRead()
         {
-            while (true)
+            while (IsReading)
             {
                 Thread.Sleep(1000);
 
@@ -664,7 +664,7 @@ namespace FlexibleExoskeleton
 
         private void LeftBhipPieRead()
         {
-            while (true)
+            while (IsReading)
             {
                 Thread.Sleep(1000);
 
@@ -682,7 +682,7 @@ namespace FlexibleExoskeleton
 
         private void RightFhipPieRead()
         {
-            while (true)
+            while (IsReading)
             {
                 Thread.Sleep(1000);
 
@@ -700,7 +700,7 @@ namespace FlexibleExoskeleton
 
         private void RightBhipPieRead()
         {
-            while (true)
+            while (IsReading)
             {
                 Thread.Sleep(1000);
 
