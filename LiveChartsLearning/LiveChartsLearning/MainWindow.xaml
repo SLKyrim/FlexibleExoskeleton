@@ -25,6 +25,9 @@
                 <Frame x:Name="DoughnutChartExample" Source="DoughnutChartExample.xaml"  NavigationUIVisibility="Hidden" Navigated="DoughnutChartExample_Navigated"></Frame>
             </TabItem>
 
+            <TabItem Header="PieChartExample">
+                <Frame x:Name="PieChartExample" Source="PieChartExample.xaml"  NavigationUIVisibility="Hidden" Navigated="PieChartExample_Navigated"></Frame>
+            </TabItem>
             
         </TabControl>
     </Grid>

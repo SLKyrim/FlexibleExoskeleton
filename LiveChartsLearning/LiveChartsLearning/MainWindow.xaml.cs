@@ -46,5 +46,10 @@ namespace LiveChartsLearning
         {
 
         }
+
+        private void PieChartExample_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 }

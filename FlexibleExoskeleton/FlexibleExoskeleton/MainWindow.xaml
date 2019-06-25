@@ -450,16 +450,16 @@
                                             </lvc:CartesianChart.AxisX>
                                         </lvc:CartesianChart>
 
-                                        <lvc:PieChart Name="LeftFhipPie" Grid.Column="1" Series="{Binding LeftFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                        <lvc:PieChart Name="LeftFhipPie" Grid.Column="1" Series="{Binding LeftFhipPie_SeriesCollection}" LegendLocation="Top" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                                             </lvc:PieChart.ChartLegend>
                                             <lvc:PieChart.DataTooltip>
-                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                                <lvc:DefaultTooltip BulletSize="200"></lvc:DefaultTooltip>
                                             </lvc:PieChart.DataTooltip>
                                         </lvc:PieChart>
 
-                                        <lvc:PieChart Name="LeftBhipPie" Grid.Column="2" Series="{Binding LeftBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                        <lvc:PieChart Name="LeftBhipPie" Grid.Column="2" Series="{Binding LeftBhipPie_SeriesCollection}" LegendLocation="Top" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                                             </lvc:PieChart.ChartLegend>
@@ -510,7 +510,7 @@
                                             </lvc:CartesianChart.AxisX>
                                         </lvc:CartesianChart>
 
-                                        <lvc:PieChart Name="RightFhipPie" Grid.Column="1" Series="{Binding RightFhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                        <lvc:PieChart Name="RightFhipPie" Grid.Column="1" Series="{Binding RightFhipPie_SeriesCollection}" LegendLocation="Top" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                                             </lvc:PieChart.ChartLegend>
@@ -519,7 +519,7 @@
                                             </lvc:PieChart.DataTooltip>
                                         </lvc:PieChart>
 
-                                        <lvc:PieChart Name="RightBhipPie" Grid.Column="2" Series="{Binding RightBhipPie_SeriesCollection}" LegendLocation="Top" InnerRadius="70" Margin="15 15">
+                                        <lvc:PieChart Name="RightBhipPie" Grid.Column="2" Series="{Binding RightBhipPie_SeriesCollection}" LegendLocation="Top" Margin="15 15">
                                             <lvc:PieChart.ChartLegend>
                                                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                                             </lvc:PieChart.ChartLegend>

@@ -414,13 +414,15 @@ namespace FlexibleExoskeleton
                 {
                     Title = "左前髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
                 new PieSeries
                 {
                     Title = "左前髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
             };
 
@@ -430,13 +432,15 @@ namespace FlexibleExoskeleton
                 {
                     Title = "左后髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
                 new PieSeries
                 {
                     Title = "左后髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
             };
 
@@ -446,13 +450,15 @@ namespace FlexibleExoskeleton
                 {
                     Title = "右前髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
                 new PieSeries
                 {
                     Title = "右前髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
             };
 
@@ -462,13 +468,15 @@ namespace FlexibleExoskeleton
                 {
                     Title = "右后髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
                 new PieSeries
                 {
                     Title = "右后髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
-                    DataLabels = false
+                    DataLabels = true,
+                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                 },
             };
 
@@ -644,6 +652,8 @@ namespace FlexibleExoskeleton
         public SeriesCollection RightFhipPie_SeriesCollection { get; set; } // 右前髋环状图
         public SeriesCollection RightBhipPie_SeriesCollection { get; set; } // 右后髋环状图
 
+        public Func<ChartPoint, string> PointLabel { get; set; } // 显示百分比
+
         private void LeftFhipPieRead()
         {
             while (IsReading)
@@ -660,8 +670,11 @@ namespace FlexibleExoskeleton
                     {
                         flag = !flag;
 
-                        if (flag) observable.Value = Math.Abs(ports.IdealForce[0]); // 左前髋预测                          
-                        else observable.Value = Math.Abs(ports.ActualForce[0]); // 左前髋实际                                   
+                        if (flag) observable.Value = Math.Abs(_trend1); // 左前髋预测                          
+                        else observable.Value = Math.Abs(_trend2); // 左前髋实际     
+
+                        //if (flag) observable.Value = Math.Abs(ports.IdealForce[0]); // 左前髋预测                          
+                        //else observable.Value = Math.Abs(ports.ActualForce[0]); // 左前髋实际                                   
                     }
                 }
 
