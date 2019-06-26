@@ -114,9 +114,9 @@ namespace FlexibleExoskeleton
                         for (int i = 0; i < 11; i++) // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
                         {
                             temp[i * 4] = bytes[i * 4 + 7];
-                            temp[i * 4 + 1] = bytes[i * 4 + 5];
-                            temp[i * 4 + 2] = bytes[i * 4 + 3];
-                            temp[i * 4 + 3] = bytes[i * 4 + 1];
+                            temp[i * 4 + 1] = bytes[i * 4 + 6];
+                            temp[i * 4 + 2] = bytes[i * 4 + 5];
+                            temp[i * 4 + 3] = bytes[i * 4 + 4];
                         }
 
                         for (int i = 0; i < 4; i++)
@@ -125,7 +125,7 @@ namespace FlexibleExoskeleton
                             IdealForce[i] = BitConverter.ToSingle(temp, i * 4 + 16);
                         }
 
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             imus[i] = BitConverter.ToSingle(temp, i * 4 + 32);
                         }

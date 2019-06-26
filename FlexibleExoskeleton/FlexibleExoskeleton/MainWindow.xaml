@@ -61,6 +61,8 @@
                                         <ComboBoxItem>19200</ComboBoxItem>
                                         <ComboBoxItem>38400</ComboBoxItem>
                                         <ComboBoxItem IsSelected="True">115200</ComboBoxItem>
+                                        <ComboBoxItem>256000</ComboBoxItem>
+                                        <ComboBoxItem>500000</ComboBoxItem>
                                     </ComboBox>
                                 </Grid>
                                 <!--波特率下拉选项框结束-->

@@ -102,14 +102,14 @@ namespace FlexibleExoskeleton
         public void ShowDataTimer(object sender, EventArgs e)//电机状态，压力，倾角，角度传感器状态的文本输出
         {
             //4个压力传感器的文本框输出
-            //Pressure1_Textbox.Text = ports.pressures[0].ToString("F");
-            //Pressure2_Textbox.Text = ports.pressures[1].ToString("F");
-            //Pressure3_Textbox.Text = ports.pressures[2].ToString("F");
-            //Pressure4_Textbox.Text = ports.pressures[3].ToString("F");
+            Pressure1_Textbox.Text = ports.ActualForce[0].ToString("F");
+            Pressure2_Textbox.Text = ports.ActualForce[1].ToString("F");
+            Pressure3_Textbox.Text = ports.ActualForce[2].ToString("F");
+            Pressure4_Textbox.Text = ports.ActualForce[3].ToString("F");
 
             //2个IMU的文本框输出
-            //IMU1_Textbox.Text = ports.imus[0].ToString("F");
-            //IMU2_Textbox.Text = ports.imus[1].ToString("F");
+            IMU1_Textbox.Text = ports.imus[0].ToString("F");
+            IMU2_Textbox.Text = ports.imus[1].ToString("F");
 
             // LED显示
             if (ports.led == 1) // 对左膝助力
