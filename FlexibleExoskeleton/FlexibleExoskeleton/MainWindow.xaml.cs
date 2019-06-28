@@ -521,14 +521,14 @@ namespace FlexibleExoskeleton
                     Title = "左前髋实际", 
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
                 new PieSeries
                 {
                     Title = "左前髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
             };
 
@@ -539,14 +539,14 @@ namespace FlexibleExoskeleton
                     Title = "左后髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
                 new PieSeries
                 {
                     Title = "左后髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
             };
 
@@ -557,14 +557,14 @@ namespace FlexibleExoskeleton
                     Title = "右前髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
                 new PieSeries
                 {
                     Title = "右前髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
             };
 
@@ -575,14 +575,14 @@ namespace FlexibleExoskeleton
                     Title = "右后髋实际",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(8) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
                 new PieSeries
                 {
                     Title = "右后髋预测",
                     Values = new ChartValues<ObservableValue> { new ObservableValue(6) },
                     DataLabels = true,
-                    LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                    LabelPoint = chartPoint => string.Format("({0:N2}) ({1:P})", chartPoint.Y, chartPoint.Participation) // string.Format格式化小数位:({0:N2})表示第一个数保留2位小数,({1:P})表示第二个数以百分数显示
                 },
             };
 
@@ -600,7 +600,6 @@ namespace FlexibleExoskeleton
         //public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         //public ChartValues<MeasureModel> ChartValues4 { get; set; }
-
 
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }

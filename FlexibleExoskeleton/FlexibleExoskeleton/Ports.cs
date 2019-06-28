@@ -59,8 +59,8 @@ namespace FlexibleExoskeleton
             // 使空载时可视化绘图窗口有读数
             for (int i = 0; i < 4; i++)
             {
-                ActualForce[i] = 10.5F;
-                IdealForce[i] = 9.5F;
+                ActualForce[i] = 10.7F;
+                IdealForce[i] = 10.2F;
             }
             imus[0] = 10;
             imus[1] = 10;
