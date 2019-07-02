@@ -25,7 +25,7 @@ namespace FlexibleExoskeleton
         public float[] ActualForce = new float[4]; // 4个实际助力
         public float[] IdealForce = new float[4]; // 4个预测助力
         public float[] imus = new float[2]; // 2个IMU
-        public float led = new float(); // 1个LED触发信号
+        public float[] leds = new float[4]; // 4个LED触发信号
         #endregion
 
         #region 扫描串口
@@ -61,6 +61,7 @@ namespace FlexibleExoskeleton
             {
                 ActualForce[i] = 10.7F;
                 IdealForce[i] = 10.2F;
+                leds[i] = 1.2F;
             }
             imus[0] = 10;
             imus[1] = 10;
@@ -96,9 +97,12 @@ namespace FlexibleExoskeleton
                 // 32-35四字节是第4个预测助力值(28-31)
                 // 36-39四字节是左腿IMU(32-35)
                 // 40-43四字节是右腿IMU(36-39)
-                // 44-47四字节是LED触发信号(40-43)
+                // 44-47四字节是左前髋LED触发信号(40-43)(为1时助力)
+                // 48-51四字节是左后髋LED触发信号(44-47)(为1时助力)
+                // 52-55四字节是右前髋LED触发信号(48-51)(为1时助力)
+                // 56-59四字节是右后髋LED触发信号(52-55)(为1时助力)
                 int bufferlen = ReadData_SerialPort.BytesToRead; //先记录下来，避免某种原因，人为的原因，操作几次之间时间长，缓存不一致
-                if (bufferlen >= 49) 
+                if (bufferlen >= 57) 
                 {
                     byte[] bytes = new byte[bufferlen]; //声明一个临时数组存储当前来的串口数据
                     ReadData_SerialPort.Read(bytes, 0, bufferlen); //读取串口内部缓冲区数据到bytes数组
@@ -111,7 +115,7 @@ namespace FlexibleExoskeleton
                         
                         byte[] temp = new byte[44];
 
-                        for (int i = 0; i < 11; i++) // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
+                        for (int i = 0; i < 12; i++) // 似乎BitConverter读取数据的高低位顺序与数组相反，所以这里需要调转顺序
                         {
                             temp[i * 4] = bytes[i * 4 + 7];
                             temp[i * 4 + 1] = bytes[i * 4 + 6];
@@ -123,14 +127,13 @@ namespace FlexibleExoskeleton
                         {
                             ActualForce[i] = BitConverter.ToSingle(temp, i * 4);
                             IdealForce[i] = BitConverter.ToSingle(temp, i * 4 + 16);
+                            leds[i] = BitConverter.ToSingle(temp, i * 4 + 40);
                         }
 
                         for (int i = 0; i < 2; i++)
                         {
-                            imus[i] = BitConverter.ToSingle(temp, i * 4 + 32);
+                            imus[i] = BitConverter.ToSingle(temp, i * 4 + 32);                          
                         }
-
-                        led = BitConverter.ToSingle(temp, 40);
                     }
                 }
             }

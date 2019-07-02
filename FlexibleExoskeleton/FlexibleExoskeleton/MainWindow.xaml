@@ -245,13 +245,14 @@
                                     <Image Height="300" Grid.Row="0" DockPanel.Dock="Bottom" Source=".\images\HumanBody.png"/>
                                     <TextBlock x:Name="RightBhip_Text" Text="右后髋" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="0,180,5,5"/>
                                     <TextBlock x:Name="RightFhip_Text" Text="右前髋" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="0,205,5,5"/>
-                                    <TextBlock x:Name="RightKnee_Text" Text="右膝" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="10,230,5,5"/>
+                                    <TextBlock x:Name="RightKnee_Text" Text="右膝" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="10,230,5,5" Visibility="Hidden"/>
                                     <TextBlock x:Name="LeftBhip_Text" Text="左后髋" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="142,180,0,0"/>
                                     <TextBlock x:Name="LeftFhip_Text" Text="左前髋" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="142,205,0,0"/>
-                                    <TextBlock x:Name="LeftKnee_Text" Text="左膝" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="147,230,0,0"/>
+                                    <TextBlock x:Name="LeftKnee_Text" Text="左膝" Foreground="Gray" FontSize="14" Grid.Row="0" TextWrapping="Wrap" Margin="147,230,0,0" Visibility="Hidden"/>
+
                                                                        
-                                    <!--左膝指示灯-->
-                                    <Grid x:Name="LeftLight_Grid" Grid.Row="0" Width="16" Height="16" Margin="22,120,0,0">
+                                    <!--左膝指示灯-->                               
+                                    <Grid x:Name="LeftLight_Grid" Grid.Row="0" Width="16" Height="16" Margin="22,120,0,0" Visibility="Hidden">
                                         <Ellipse x:Name="LeftKneeLight_Ellipse" Fill="Gray"/>
                                         <Ellipse>
                                             <Ellipse.Fill>
@@ -318,9 +319,9 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                     </Grid>
-
+                                    
                                     <!--右膝指示灯-->
-                                    <Grid Grid.Row="{Binding ElementName=LeftLight_Grid, Path=Grid.Row}" Width="{Binding ElementName=LeftLight_Grid, Path=Width}" Height="{Binding ElementName=LeftLight_Grid, Path=Height}" Margin="-25,120,0,0">
+                                    <Grid Grid.Row="{Binding ElementName=LeftLight_Grid, Path=Grid.Row}" Width="{Binding ElementName=LeftLight_Grid, Path=Width}" Height="{Binding ElementName=LeftLight_Grid, Path=Height}" Margin="-25,120,0,0" Visibility="Hidden">
                                         <Ellipse x:Name="RightKneeLight_Ellipse" Fill="Gray"/>
                                         <Ellipse>
                                             <Ellipse.Fill>
@@ -341,7 +342,7 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                     </Grid>
-                                    
+
                                     <!--右前髋指示灯-->
                                     <Grid Grid.Row="{Binding ElementName=LeftLight_Grid, Path=Grid.Row}" Width="{Binding ElementName=LeftLight_Grid, Path=Width}" Height="{Binding ElementName=LeftLight_Grid, Path=Height}" Margin="-30,60,0,0">
                                         <Ellipse x:Name="RightFhipLight_Ellipse" Fill="Gray"/>

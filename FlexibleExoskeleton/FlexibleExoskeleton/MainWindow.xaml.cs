@@ -112,123 +112,48 @@ namespace FlexibleExoskeleton
             IMU2_Textbox.Text = ports.imus[1].ToString("F");
 
             // LED显示
-            if (ports.led == 1) // 对左膝助力
+            if ((int)(ports.leds[0]) == 1) // 对左前髋助力
             {
-                LeftKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
-                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
-                RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Red;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Gray;
-                LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Gray;
-                RightFhip_Text.Foreground = Brushes.Gray;
-            }
-
-            else if (ports.led == 2) // 对右膝助力
-            {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
-                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
-                RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Red;
-                LeftBhip_Text.Foreground = Brushes.Gray;
-                LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Gray;
-                RightFhip_Text.Foreground = Brushes.Gray;
-            }
-
-            else if (ports.led == 3) // 对左后髋助力
-            {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-                LeftBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
-                RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Red;
-                LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Gray;
-                RightFhip_Text.Foreground = Brushes.Gray;
-            }
-
-            else if (ports.led == 4) // 对左前髋助力
-            {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
                 LeftFhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
-                RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Gray;
                 LeftFhip_Text.Foreground = Brushes.Red;
-                RightBhip_Text.Foreground = Brushes.Gray;
-                RightFhip_Text.Foreground = Brushes.Gray;
             }
-
-            else if (ports.led == 5) // 对右后髋助力
+            else
             {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
                 LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-                RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Gray;
                 LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Red;
-                RightFhip_Text.Foreground = Brushes.Gray;
             }
 
-            else if (ports.led.ToString() == "6") // 对右前髋助力
+            if ((int)(ports.leds[1]) == 1) // 对左后髋助力
             {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                LeftBhip_Text.Foreground = Brushes.Red;
+            }
+            else
+            {
                 LeftBhipLight_Ellipse.Fill = Brushes.Gray;
-                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                LeftBhip_Text.Foreground = Brushes.Gray;
+            }
+
+            if ((int)(ports.leds[2]) == 1) // 对右前髋助力
+            {
                 RightFhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Gray;
-                LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Gray;
                 RightFhip_Text.Foreground = Brushes.Red;
             }
-
-            else // 灯全灭
+            else
             {
-                LeftKneeLight_Ellipse.Fill = Brushes.Gray;
-                RightKneeLight_Ellipse.Fill = Brushes.Gray;
-                LeftBhipLight_Ellipse.Fill = Brushes.Gray;
-                LeftFhipLight_Ellipse.Fill = Brushes.Gray;
-                RightBhipLight_Ellipse.Fill = Brushes.Gray;
                 RightFhipLight_Ellipse.Fill = Brushes.Gray;
-
-                LeftKnee_Text.Foreground = Brushes.Gray;
-                RightKnee_Text.Foreground = Brushes.Gray;
-                LeftBhip_Text.Foreground = Brushes.Gray;
-                LeftFhip_Text.Foreground = Brushes.Gray;
-                RightBhip_Text.Foreground = Brushes.Gray;
                 RightFhip_Text.Foreground = Brushes.Gray;
+            }
+
+            if ((int)(ports.leds[2]) == 1) // 对右后髋助力
+            {
+                RightBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
+                RightBhip_Text.Foreground = Brushes.Red;
+            }
+            else
+            {
+                RightBhipLight_Ellipse.Fill = Brushes.Gray;
+                RightBhip_Text.Foreground = Brushes.Gray;
             }
         }
         #endregion
@@ -327,7 +252,8 @@ namespace FlexibleExoskeleton
             }
             else
             {
-                ports.led = 0;
+                for (int i = 0; i < 4; i++)
+                    ports.leds[i] = 0;
                 ports.SerialPortClose();
 
                 IsReading = !IsReading;
