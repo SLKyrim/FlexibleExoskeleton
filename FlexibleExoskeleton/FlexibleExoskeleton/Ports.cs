@@ -61,7 +61,7 @@ namespace FlexibleExoskeleton
             {
                 ActualForce[i] = 10.7F;
                 IdealForce[i] = 10.2F;
-                leds[i] = 1.2F;
+                //leds[i] = 1.2F;
             }
             imus[0] = 10;
             imus[1] = 10;

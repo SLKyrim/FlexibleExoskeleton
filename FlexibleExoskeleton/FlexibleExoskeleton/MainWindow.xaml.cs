@@ -145,7 +145,7 @@ namespace FlexibleExoskeleton
                 RightFhip_Text.Foreground = Brushes.Gray;
             }
 
-            if ((int)(ports.leds[2]) == 1) // 对右后髋助力
+            if ((int)(ports.leds[3]) == 1) // 对右后髋助力
             {
                 RightBhipLight_Ellipse.Fill = new SolidColorBrush(Color.FromArgb(230, 20, 200, 20));
                 RightBhip_Text.Foreground = Brushes.Red;
@@ -351,8 +351,8 @@ namespace FlexibleExoskeleton
         private double _trend4;
 
         //动态能量显示板参数
-        private double _lastLecture;
-        private double _trend;
+        private double _lastLecture; // 跟随_trend显示的数值
+        private double _trend;  // 监控数值（即该绘图的输入）
 
         //测试绘图
         private ChartPlotter cp;
@@ -422,7 +422,7 @@ namespace FlexibleExoskeleton
                     }
                 }
             };
-            _trend = 8;
+            //_trend = 8;
 
             DataContext = this;
             #endregion
@@ -636,7 +636,7 @@ namespace FlexibleExoskeleton
 
             Action action = delegate
             {
-                double temp = _trend;
+                //double temp = _trend;
                 LastHourSeries[0].Values.Add(new ObservableValue(_trend));
                 //LastHourSeries[0].Values.Add(_trend);
                 LastHourSeries[0].Values.RemoveAt(0);
@@ -645,10 +645,12 @@ namespace FlexibleExoskeleton
 
             while (IsReading)
             {
-                double temp = _trend;
+                //double temp = _trend;
 
                 Thread.Sleep(500);
-                _trend += (r.NextDouble() > 0.3 ? 1 : -1) * r.Next(0, 5); // a=(b>0)?b:-b即b>0时,a=b,否则a=-b
+                //_trend = ports.imus[0];
+                _trend += (r.NextDouble() > 0.35 ? 1 : -1) * r.Next(0, 100); // a=(b>0)?b:-b即b>0时,a=b,否则a=-b // 这里让_trend上升的几率为70%
+                //_trend += r.Next(-5, 5);
                 Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, action);
             }
         }
@@ -668,6 +670,7 @@ namespace FlexibleExoskeleton
                 }
                 LastLecture = target;
             });
+            double temp3 = LastLecture;
         }
 
         protected virtual void OnPropertyChanged_MaterialCards(string propertyName = null)
